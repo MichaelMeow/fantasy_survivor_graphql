@@ -64,4 +64,4 @@ Below is the first attempt at approximating the new graphQL data structure.
 
 (Insert Schema Diagram)
 
-![alt text](https://raw.githubusercontent.com/michaelmeow/fantasy_survivor_graphql/master/src/assets/images/schema.pdf)
+![alt text](https://raw.githubusercontent.com/michaelmeow/fantasy_survivor_graphql/master/src/assets/images/schema.png)
