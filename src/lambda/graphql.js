@@ -1,6 +1,14 @@
 // src/lambda/graphql.js
-const { ApolloServer, gql } = require("apollo-server-lambda");
+import { ApolloServer, gql } from 'apollo-server-lambda';
+import * as mongoose from 'mongoose';
+const Contestant = require('../models/contestants');
 
+
+
+mongoose.connect('mongodb://mikey:mikey555666@ds027769.mlab.com:27769/fantasy_survivor');
+mongoose.connection.once('open', () => {
+  console.log('connected to database');
+});
 
 const typeDefs = gql`
   type Query {
@@ -40,14 +48,14 @@ const resolvers = {
   },
   Mutation: {
     createContestant: (root, args) => {
-      const newContestant = {
+      let newContestant = new Contestant({
         id: args.id,
         firstName: args.firstName,
         lastName: args.lastName,
         photoURL: args.photoURL,
         originalTribe: args.originalTribe
-      }
-      contestants.push(newContestant)
+      });
+      newContestant.save()
       return newContestant
     },
   },
