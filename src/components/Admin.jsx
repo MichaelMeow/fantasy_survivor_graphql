@@ -1,4 +1,5 @@
 import React from 'react';
+import ContestantForm from './ContestantForm';
 
 class Admin extends React.Component {
 
@@ -11,7 +12,7 @@ class Admin extends React.Component {
   render(){
     return (
       <div>
-
+        <ContestantForm />
         <style jsx>{`
 
           `}</style>

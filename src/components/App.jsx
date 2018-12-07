@@ -11,6 +11,7 @@ import Move from './Move';
 
 
 class App extends Component {
+  document.body.style.margin = '0px';
   render() {
     return (
       <div>
