@@ -22,7 +22,7 @@ const typeDefs = gql`
     originalTribe: String!
   }
   type Mutation {
-    createContestant(firstName: String!, lastName: String!, photoURL: String!, originalTribe: String!): Contestant!
+    addContestant(firstName: String!, lastName: String!, photoURL: String!, originalTribe: String!): Contestant!
   }
 `;
 
@@ -52,7 +52,7 @@ const resolvers = {
     }
   },
   Mutation: {
-    createContestant: (root, args) => {
+    addContestant: (root, args) => {
       let newContestant = new Contestant({
         id: args.id,
         firstName: args.firstName,
