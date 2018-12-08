@@ -1,7 +1,7 @@
 // src/lambda/graphql.js
 import { ApolloServer, gql } from 'apollo-server-lambda';
 import * as mongoose from 'mongoose';
-const Contestant = require('../models/contestants');
+const Contestant = require('../models/contestant');
 
 
 
@@ -13,6 +13,7 @@ mongoose.connection.once('open', () => {
 const typeDefs = gql`
   type Query {
     contestants: [Contestant]
+    contestant(id:ID!): Contestant
   }
   type Contestant {
     id: ID!
@@ -22,7 +23,7 @@ const typeDefs = gql`
     originalTribe: String!
   }
   type Mutation {
-    createContestant(id: ID!, firstName: String!, lastName: String!, photoURL: String!, originalTribe: String!): Contestant!
+    createContestant(firstName: String!, lastName: String!, photoURL: String!, originalTribe: String!): Contestant!
   }
 `;
 
@@ -44,7 +45,12 @@ let contestants = [{
 
 const resolvers = {
   Query: {
-    contestants: () => contestants,
+    contestants: () => {
+      return Contestant.find({});
+    },
+    contestant: (root, args ) => {
+      return Contestant.findById(args.id);
+    }
   },
   Mutation: {
     createContestant: (root, args) => {
@@ -55,8 +61,7 @@ const resolvers = {
         photoURL: args.photoURL,
         originalTribe: args.originalTribe
       });
-      newContestant.save()
-      return newContestant
+      return newContestant.save()
     },
   },
 };
