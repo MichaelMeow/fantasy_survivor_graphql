@@ -1,8 +1,8 @@
 import React from 'react';
 import { gql } from 'apollo-boost';
-import { graphql } from 'react-apollo';
+import { Query } from 'react-apollo';
 
-const getContestantsQuery = gql`
+const GET_CONTESTANTS = gql`
   {
     contestants{
       firstName
@@ -12,41 +12,29 @@ const getContestantsQuery = gql`
   }
 `
 
-class Move extends React.Component {
+function Move(props) {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-    this.displayContestants = this.displayContestants.bind(this);
-  }
+  return (
+    <div>
+      Contestant List:
 
-
-  displayContestants(){
-    let data = this.props.data;
-    if(data.loading){
-      return(<div> Loading...</div>);
-    } else {
-      return data.contestants.map(contestant =>{
-        return(
-          <li key={contestant.id}>{contestant.firstName}</li>
-        )
-      });
-    }
-  }
-
-  render(){
-    return (
-      <div>
-        Contestant List:
-        <ul>
-          { this.displayContestants() }
-        </ul>
-      </div>
-    );
-  }
+      <Query query={GET_CONTESTANTS}>
+      {({ loading, error, data }) => {
+        if (loading) return "Loading...";
+        if (error) return `Error! ${error.message}`;
+        return (
+          <ul>
+          {data.contestants.map(contestant => (
+            <li key={contestant.id}>{contestant.firstName} {contestant.lastName}</li>
+          ))}
+          </ul>
+        );
+      }}
+      </Query>
+    </div>
+  );
 }
 
 
 
-export default graphql(getContestantsQuery)(Move);
+export default Move;
