@@ -2,6 +2,7 @@
 import { ApolloServer, gql } from 'apollo-server-lambda';
 import * as mongoose from 'mongoose';
 const Contestant = require('../models/contestant');
+const Episode = require('../models/episode');
 
 
 mongoose.connect('mongodb://mikey:mikey555666@ds027769.mlab.com:27769/fantasy_survivor');
@@ -12,40 +13,49 @@ mongoose.connection.once('open', () => {
 const typeDefs = gql`
   type Query {
     contestants: [Contestant]
+    episodes: [Episode]
     contestant(id:ID!): Contestant
   }
   type Contestant {
     id: ID!
     firstName: String!
     lastName: String!
+    fullName: String!
     photoURL: String!
     originalTribe: String!
   }
+  type Episode {
+    id: ID!
+    number: Int!
+    airDate: String!
+    episodeMessage: String
+    title: String!
+    outContestantIds: [ID!]!
+  }
   type Mutation {
-    addContestant(firstName: String!, lastName: String!, photoURL: String!, originalTribe: String!): Contestant!
+    addContestant(
+      firstName: String!,
+      lastName: String!,
+      photoURL: String!,
+      originalTribe: String!): Contestant!
+    addEpisode(
+      number: Int!,
+      airDate: String!,
+      episodeMessage: String,
+      title: String!,
+      out1: String!,
+      out2: String,
+      out3: String,): Episode!
   }
 `;
-
-//start with mock db array
-let contestants = [{
-  id: 1,
-  firstName: "Alec",
-  lastName: "Merlino",
-  photoURL: "example.com",
-  originalTribe: "Goliath"
-},
-{
-  id: 2,
-  firstName: "Mike",
-  lastName: "White",
-  photoURL: "example.com",
-  originalTribe: "David"
-}];
 
 const resolvers = {
   Query: {
     contestants: () => {
       return Contestant.find({});
+    },
+    episodes: () => {
+      return Episode.find({});
     },
     contestant: (root, args ) => {
       return Contestant.findById(args.id);
@@ -54,14 +64,24 @@ const resolvers = {
   Mutation: {
     addContestant: (root, args) => {
       let newContestant = new Contestant({
-        id: args.id,
         firstName: args.firstName,
         lastName: args.lastName,
+        fullName: args.firstName + ' ' + args.lastName,
         photoURL: args.photoURL,
         originalTribe: args.originalTribe
       });
-      return newContestant.save()
+      return newContestant.save();
     },
+    addEpisode: (root, args) => {
+      let newEpisode = new Episode({
+        number: args.number,
+        airDate: args.airDate,
+        episodeMessage: args.episodeMessage,
+        title: args.title,
+        outContestantIds: [args.out1, args.out2, args.out3]
+      })
+      return newEpisode.save();
+    }
   },
 };
 
