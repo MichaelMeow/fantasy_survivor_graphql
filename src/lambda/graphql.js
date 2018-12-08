@@ -4,7 +4,6 @@ import * as mongoose from 'mongoose';
 const Contestant = require('../models/contestant');
 
 
-
 mongoose.connect('mongodb://mikey:mikey555666@ds027769.mlab.com:27769/fantasy_survivor');
 mongoose.connection.once('open', () => {
   console.log('connected to database');

@@ -5,6 +5,7 @@
   "dependencies": {
     "apollo-boost": "^0.1.22",
     "apollo-server-lambda": "^2.2.6",
+    "cors": "^2.8.5",
     "graphql": "^14.0.2",
     "graphql-server-express": "^1.4.0",
     "mongodb": "^3.1.10",
