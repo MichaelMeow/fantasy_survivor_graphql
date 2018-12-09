@@ -6,10 +6,6 @@ function Scoreboard(){
   return (
     <div>
     Scoreboard Page
-
-      <style jsx>{`
-
-    `}</style>
     </div>
   );
 }

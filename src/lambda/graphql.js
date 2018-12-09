@@ -3,6 +3,7 @@ import { ApolloServer, gql } from 'apollo-server-lambda';
 import * as mongoose from 'mongoose';
 const Contestant = require('../models/contestant');
 const Episode = require('../models/episode');
+const Points = require('../models/points');
 
 
 mongoose.connect('mongodb://mikey:mikey555666@ds027769.mlab.com:27769/fantasy_survivor');
@@ -32,6 +33,28 @@ const typeDefs = gql`
     title: String!
     outContestantIds: [ID!]!
   }
+  type Points {
+    id:ID!
+    contestantID: String!
+    episodeNumber: Int!
+    teamReward: Int!
+    teamImmunity: Int!
+    individualReward: Int!
+    individualImmunity: Int!
+    correctVote: Int!
+    recievedVote: Int!
+    out: Int!
+    recievedClue: Int!
+    foundIdol: Int!
+    foundAdvantage: Int!
+    heldIdol: Int!
+    heldAdvantage: Int!
+    quoted: Int!
+    chosenForReward: Int!
+    juryVotes: Int!
+    special: Int!
+    total: Int!
+  }
   type Mutation {
     addContestant(
       firstName: String!,
@@ -46,7 +69,28 @@ const typeDefs = gql`
       out1: String!,
       out2: String,
       out3: String,): Episode!
+    addPoints(
+      contestantID: String!,
+      episodeNumber: Int!,
+      teamReward: Int!,
+      teamImmunity: Int!,
+      individualReward: Int!,
+      individualImmunity: Int!,
+      correctVote: Int!,
+      recievedVote: Int!,
+      out: Int!,
+      recievedClue: Int!,
+      foundIdol: Int!,
+      foundAdvantage: Int!,
+      heldIdol: Int!,
+      heldAdvantage: Int!,
+      quoted: Int!,
+      chosenForReward: Int!,
+      juryVotes: Int!,
+      special: Int!,
+      total: Int!): Points!
   }
+
 `;
 
 const resolvers = {
@@ -81,7 +125,31 @@ const resolvers = {
         outContestantIds: [args.out1, args.out2, args.out3]
       })
       return newEpisode.save();
-    }
+    },
+    addPoints: (root, args) => {
+      let newPoints = new Points({
+        contestantID: args.contestantID,
+        episodeNumber: args.episodeNumber,
+        teamReward: args.teamReward,
+        teamImmunity: args.teamImmunity,
+        individualReward: args.individualReward,
+        individualImmunity: args.individualImmunity,
+        correctVote: args.correctVote,
+        recievedVote: args.recievedVote,
+        out: args.out,
+        recievedClue: args.recievedClue,
+        foundIdol: args.foundIdol,
+        foundAdvantage: args.foundAdvantage,
+        heldIdol: args.heldIdol,
+        heldAdvantage: args.heldAdvantage,
+        quoted: args.quoted,
+        chosenForReward: args.chosenForReward,
+        juryVotes: args.juryVotes,
+        special: args.special,
+        total: args.total
+      })
+      return newPoints.save();
+    },
   },
 };
 

@@ -7,9 +7,6 @@ function Rules(){
     <div>
     Rules Page
 
-      <style jsx>{`
-
-    `}</style>
     </div>
   );
 }

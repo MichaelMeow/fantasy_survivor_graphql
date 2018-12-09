@@ -1,6 +1,12 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
+import styled from 'styled-components';
+
+const Div = styled.div`
+  padding: 10px;
+`
+
 
 const ADD_CONTESTANT = gql`
   mutation AddContestant(
@@ -26,10 +32,10 @@ function ContestantForm() {
   let originalTribe;
 
   return (
-    <div>
+    <Div>
       <Mutation mutation={ADD_CONTESTANT}>
         {(addContestant, { data }) => (
-          <div>
+          <Div>
             <form
               onSubmit={e => {
                 e.preventDefault();
@@ -49,60 +55,57 @@ function ContestantForm() {
               <h3>
                 Add Contestants:
               </h3>
-              <div>
+              <Div>
                 To be used at beginning of the season to add survivor contestants to the game.
-              </div>
-              <div>
+              </Div>
+              <Div>
                 Contestant First Name
-              </div>
-              <div>
+              </Div>
+              <Div>
                 <input
                   type='text'
                   id='firstName'
                   placeholder='First Name'
                   ref={(input) => {firstName = input;}}/>
-              </div>
-              <div>
+              </Div>
+              <Div>
                 Contestant Last Name
-              </div>
-              <div>
+              </Div>
+              <Div>
                 <input
                   type='text'
                   id='lastName'
                   placeholder='Last Name'
                   ref={(input) => {lastName = input;}}/>
-              </div>
-              <div>
+              </Div>
+              <Div>
                 Contestant Starting Tribe
-              </div>
-              <div>
+              </Div>
+              <Div>
                 <input
                   type='text'
                   id='originalTribe'
                   placeholder='Original Tribe'
                   ref={(input) => {originalTribe = input;}}/>
-              </div>
-              <div>
+              </Div>
+              <Div>
                 Contestant Photo URL (Headshot from CBS.com, example: https://wwwimage-secure.cbsstatic.com/thumbnails/photos/w270/cast/13c7e74872b87a9d_svr37_800x1000_nataliaazoqa.jpg)
-              </div>
-              <div>
+              </Div>
+              <Div>
                 <input
                   type='text'
                   id='photoURL'
                   placeholder='photo URL'
                   ref={(input) => {photoURL = input;}}/>
-              </div>
-              <div>
+              </Div>
+              <Div>
                 <button type='submit'>Submit</button>
-              </div>
+              </Div>
             </form>
-          </div>
+          </Div>
         )}
       </Mutation>
       <style jsx>{`
-        div {
-          padding: 10px;
-        }
         .green {
           background-color: lightgreen;
           border-radius: 5px;
@@ -115,7 +118,7 @@ function ContestantForm() {
           color: #010101;
         }
       `}</style>
-    </div>
+    </Div>
   )
 
 }
