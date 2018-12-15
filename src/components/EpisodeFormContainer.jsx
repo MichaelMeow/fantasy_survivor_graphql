@@ -5,6 +5,7 @@ import ScoringTable from './ScoringTable';
 import styled from 'styled-components';
 import { ADD_EPISODE, ADD_POINTS } from './../constants/mutations';
 import { GET_CONTESTANTS } from './../constants/queries';
+import { ApolloConsumer } from 'react-apollo';
 
 const Div = styled.div`
   padding: 10px;
@@ -89,13 +90,18 @@ function EpisodeFormContainer(props) {
             {(addEpisode, { data }) => (
               <Mutation mutation={ADD_POINTS}>
               {(addPoints, { data }) => (
+                <ApolloConsumer>
+                {client => (
                 <form onSubmit={e => {
                   e.preventDefault();
                   handleAddEpisode(addEpisode, number);
                   contestants.map(contestant => {
                     handleAddPoints(addPoints, contestant, e, number);
                   })
+                  client.writeData({ data: { isEpisodeSubmitted: true } })
+                  return null;
                 }}>
+
                 <h3>
                   Enter Episode Info
                 </h3>
@@ -160,6 +166,8 @@ function EpisodeFormContainer(props) {
                   </Div>
 
                 </form>
+              )}
+              </ApolloConsumer>
               )}
             </Mutation>
             )}

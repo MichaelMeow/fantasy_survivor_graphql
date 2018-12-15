@@ -13,7 +13,7 @@ class Admin extends React.Component {
   render(){
     return (
       <div>
-        <EpisodeFormContainer />
+        // <EpisodeFormContainer />
         <ContestantForm />
       </div>
     );

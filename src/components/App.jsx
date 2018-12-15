@@ -23,10 +23,10 @@ class App extends Component {
         <Header/>
         <Nav/>
         <Switch>
-          <Route path='/move' render={()=> <Move />} />
-          <Route path='/scoreboard' component={Scoreboard} />
-          <Route path='/episodes' component={Episodes} />
-          <Route path='/rules' component={Rules} />
+          // <Route path='/move' render={()=> <Move />} />
+          // <Route path='/scoreboard' component={Scoreboard} />
+          // <Route path='/episodes' component={Episodes} />
+          // <Route path='/rules' component={Rules} />
           <Route path='/Admin' render={()=> <Admin />} />
         </Switch>
       </StyledApp>
