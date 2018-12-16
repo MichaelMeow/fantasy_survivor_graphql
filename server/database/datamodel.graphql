@@ -4,3 +4,18 @@ type User {
   name: String!
   email: String! @unique
 }
+
+type Contestant {
+  id: ID! @unique
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+  originalTribe: Tribe! @relation(name: "ContestantByOriginalTribe")
+  currentTribe: Tribe! @relation(name: "ContestantByCurrentTribe")
+}
+
+type Tribe {
+  id: ID! @unique
+  name: String!
+  color: String!
+}

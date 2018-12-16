@@ -1,6 +1,6 @@
 import React from 'react';
 import EpisodeFormContainer from './EpisodeFormContainer';
-import ContestantForm from './ContestantForm';
+import TribeForm from './TribeForm';
 
 class Admin extends React.Component {
 
@@ -13,8 +13,8 @@ class Admin extends React.Component {
   render(){
     return (
       <div>
-        // <EpisodeFormContainer />
-        <ContestantForm />
+
+        <TribeForm />
       </div>
     );
   }

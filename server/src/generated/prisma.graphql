@@ -1,5 +1,13 @@
 # source: https://us1.prisma.sh/michael-harmon/fantasy_survivor/dev
-# timestamp: Sat Dec 15 2018 15:21:46 GMT-0800 (PST)
+# timestamp: Sat Dec 15 2018 16:12:22 GMT-0800 (PST)
+
+type AggregateContestant {
+  count: Int!
+}
+
+type AggregateTribe {
+  count: Int!
+}
 
 type AggregateUser {
   count: Int!
@@ -10,6 +18,294 @@ type BatchPayload {
   count: Long!
 }
 
+type Contestant implements Node {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+  originalTribe: Tribe!
+  currentTribe: Tribe!
+}
+
+"""A connection to a list of items."""
+type ContestantConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ContestantEdge]!
+  aggregate: AggregateContestant!
+}
+
+input ContestantCreateInput {
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+  originalTribe: TribeCreateOneInput!
+  currentTribe: TribeCreateOneInput!
+}
+
+"""An edge in a connection."""
+type ContestantEdge {
+  """The item at the end of the edge."""
+  node: Contestant!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ContestantOrderByInput {
+  id_ASC
+  id_DESC
+  firstName_ASC
+  firstName_DESC
+  lastName_ASC
+  lastName_DESC
+  photoURL_ASC
+  photoURL_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ContestantPreviousValues {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+}
+
+type ContestantSubscriptionPayload {
+  mutation: MutationType!
+  node: Contestant
+  updatedFields: [String!]
+  previousValues: ContestantPreviousValues
+}
+
+input ContestantSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ContestantSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ContestantSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ContestantSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ContestantWhereInput
+}
+
+input ContestantUpdateInput {
+  firstName: String
+  lastName: String
+  photoURL: String
+  originalTribe: TribeUpdateOneRequiredInput
+  currentTribe: TribeUpdateOneRequiredInput
+}
+
+input ContestantUpdateManyMutationInput {
+  firstName: String
+  lastName: String
+  photoURL: String
+}
+
+input ContestantWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ContestantWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ContestantWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ContestantWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
+  photoURL: String
+
+  """All values that are not equal to given value."""
+  photoURL_not: String
+
+  """All values that are contained in given list."""
+  photoURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  photoURL_not_in: [String!]
+
+  """All values less than the given value."""
+  photoURL_lt: String
+
+  """All values less than or equal the given value."""
+  photoURL_lte: String
+
+  """All values greater than the given value."""
+  photoURL_gt: String
+
+  """All values greater than or equal the given value."""
+  photoURL_gte: String
+
+  """All values containing the given string."""
+  photoURL_contains: String
+
+  """All values not containing the given string."""
+  photoURL_not_contains: String
+
+  """All values starting with the given string."""
+  photoURL_starts_with: String
+
+  """All values not starting with the given string."""
+  photoURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  photoURL_ends_with: String
+
+  """All values not ending with the given string."""
+  photoURL_not_ends_with: String
+  originalTribe: TribeWhereInput
+  currentTribe: TribeWhereInput
+}
+
+input ContestantWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -18,11 +314,23 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createContestant(data: ContestantCreateInput!): Contestant!
+  createTribe(data: TribeCreateInput!): Tribe!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
+  updateTribe(data: TribeUpdateInput!, where: TribeWhereUniqueInput!): Tribe
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteContestant(where: ContestantWhereUniqueInput!): Contestant
+  deleteTribe(where: TribeWhereUniqueInput!): Tribe
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
+  upsertTribe(where: TribeWhereUniqueInput!, create: TribeCreateInput!, update: TribeUpdateInput!): Tribe!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
+  updateManyTribes(data: TribeUpdateManyMutationInput!, where: TribeWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyContestants(where: ContestantWhereInput): BatchPayload!
+  deleteManyTribes(where: TribeWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -54,8 +362,14 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
+  tribes(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tribe]!
   user(where: UserWhereUniqueInput!): User
+  contestant(where: ContestantWhereUniqueInput!): Contestant
+  tribe(where: TribeWhereUniqueInput!): Tribe
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
+  tribesConnection(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TribeConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -66,6 +380,263 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
+  tribe(where: TribeSubscriptionWhereInput): TribeSubscriptionPayload
+}
+
+type Tribe implements Node {
+  id: ID!
+  name: String!
+  color: String!
+}
+
+"""A connection to a list of items."""
+type TribeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [TribeEdge]!
+  aggregate: AggregateTribe!
+}
+
+input TribeCreateInput {
+  name: String!
+  color: String!
+}
+
+input TribeCreateOneInput {
+  create: TribeCreateInput
+  connect: TribeWhereUniqueInput
+}
+
+"""An edge in a connection."""
+type TribeEdge {
+  """The item at the end of the edge."""
+  node: Tribe!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum TribeOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  color_ASC
+  color_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type TribePreviousValues {
+  id: ID!
+  name: String!
+  color: String!
+}
+
+type TribeSubscriptionPayload {
+  mutation: MutationType!
+  node: Tribe
+  updatedFields: [String!]
+  previousValues: TribePreviousValues
+}
+
+input TribeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TribeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TribeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TribeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: TribeWhereInput
+}
+
+input TribeUpdateDataInput {
+  name: String
+  color: String
+}
+
+input TribeUpdateInput {
+  name: String
+  color: String
+}
+
+input TribeUpdateManyMutationInput {
+  name: String
+  color: String
+}
+
+input TribeUpdateOneRequiredInput {
+  create: TribeCreateInput
+  connect: TribeWhereUniqueInput
+  update: TribeUpdateDataInput
+  upsert: TribeUpsertNestedInput
+}
+
+input TribeUpsertNestedInput {
+  update: TribeUpdateDataInput!
+  create: TribeCreateInput!
+}
+
+input TribeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [TribeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [TribeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [TribeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  color: String
+
+  """All values that are not equal to given value."""
+  color_not: String
+
+  """All values that are contained in given list."""
+  color_in: [String!]
+
+  """All values that are not contained in given list."""
+  color_not_in: [String!]
+
+  """All values less than the given value."""
+  color_lt: String
+
+  """All values less than or equal the given value."""
+  color_lte: String
+
+  """All values greater than the given value."""
+  color_gt: String
+
+  """All values greater than or equal the given value."""
+  color_gte: String
+
+  """All values containing the given string."""
+  color_contains: String
+
+  """All values not containing the given string."""
+  color_not_contains: String
+
+  """All values starting with the given string."""
+  color_starts_with: String
+
+  """All values not starting with the given string."""
+  color_not_starts_with: String
+
+  """All values ending with the given string."""
+  color_ends_with: String
+
+  """All values not ending with the given string."""
+  color_not_ends_with: String
+}
+
+input TribeWhereUniqueInput {
+  id: ID
 }
 
 type User implements Node {

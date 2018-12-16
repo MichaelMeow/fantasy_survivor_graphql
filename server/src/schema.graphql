@@ -1,4 +1,4 @@
-# import User from "./generated/prisma.graphql"
+# import User, Tribe, Contestant from "./generated/prisma.graphql"
 
 type Query {
   hello: String!
@@ -6,4 +6,12 @@ type Query {
 
 type Mutation {
   signup(name: String!, email: String!): User
+  addContestant(
+      firstName: String!,
+      lastName: String!,
+      photoURL: String!,
+      originalTribe: ID!,
+      currentTribe: ID!
+    ): Contestant
+  addTribe(name: String!, color: String!): Tribe
 }
