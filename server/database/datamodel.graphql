@@ -7,6 +7,7 @@ type User {
 
 type Contestant {
   id: ID! @unique
+  fullName: String!
   firstName: String!
   lastName: String!
   photoURL: String!
@@ -18,4 +19,15 @@ type Tribe {
   id: ID! @unique
   name: String!
   color: String!
+}
+
+type Episode {
+  id: ID! @unique
+  number: Int!
+  title: String!
+  out1: Contestant @relation(name: "ContestantOut1ByEpisode")
+  out2: Contestant @relation(name: "ContestantOut2ByEpisode")
+  out3: Contestant @relation(name: "ContestantOut3ByEpisode")
+  episodeMessage: String
+  airDate: String!
 }

@@ -1,7 +1,11 @@
 # source: https://us1.prisma.sh/michael-harmon/fantasy_survivor/dev
-# timestamp: Sat Dec 15 2018 16:12:22 GMT-0800 (PST)
+# timestamp: Sat Dec 15 2018 18:43:16 GMT-0800 (PST)
 
 type AggregateContestant {
+  count: Int!
+}
+
+type AggregateEpisode {
   count: Int!
 }
 
@@ -20,6 +24,7 @@ type BatchPayload {
 
 type Contestant implements Node {
   id: ID!
+  fullName: String!
   firstName: String!
   lastName: String!
   photoURL: String!
@@ -38,11 +43,17 @@ type ContestantConnection {
 }
 
 input ContestantCreateInput {
+  fullName: String!
   firstName: String!
   lastName: String!
   photoURL: String!
   originalTribe: TribeCreateOneInput!
   currentTribe: TribeCreateOneInput!
+}
+
+input ContestantCreateOneInput {
+  create: ContestantCreateInput
+  connect: ContestantWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -57,6 +68,8 @@ type ContestantEdge {
 enum ContestantOrderByInput {
   id_ASC
   id_DESC
+  fullName_ASC
+  fullName_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
@@ -71,6 +84,7 @@ enum ContestantOrderByInput {
 
 type ContestantPreviousValues {
   id: ID!
+  fullName: String!
   firstName: String!
   lastName: String!
   photoURL: String!
@@ -115,7 +129,17 @@ input ContestantSubscriptionWhereInput {
   node: ContestantWhereInput
 }
 
+input ContestantUpdateDataInput {
+  fullName: String
+  firstName: String
+  lastName: String
+  photoURL: String
+  originalTribe: TribeUpdateOneRequiredInput
+  currentTribe: TribeUpdateOneRequiredInput
+}
+
 input ContestantUpdateInput {
+  fullName: String
   firstName: String
   lastName: String
   photoURL: String
@@ -124,9 +148,24 @@ input ContestantUpdateInput {
 }
 
 input ContestantUpdateManyMutationInput {
+  fullName: String
   firstName: String
   lastName: String
   photoURL: String
+}
+
+input ContestantUpdateOneInput {
+  create: ContestantCreateInput
+  connect: ContestantWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: ContestantUpdateDataInput
+  upsert: ContestantUpsertNestedInput
+}
+
+input ContestantUpsertNestedInput {
+  update: ContestantUpdateDataInput!
+  create: ContestantCreateInput!
 }
 
 input ContestantWhereInput {
@@ -178,6 +217,46 @@ input ContestantWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  fullName: String
+
+  """All values that are not equal to given value."""
+  fullName_not: String
+
+  """All values that are contained in given list."""
+  fullName_in: [String!]
+
+  """All values that are not contained in given list."""
+  fullName_not_in: [String!]
+
+  """All values less than the given value."""
+  fullName_lt: String
+
+  """All values less than or equal the given value."""
+  fullName_lte: String
+
+  """All values greater than the given value."""
+  fullName_gt: String
+
+  """All values greater than or equal the given value."""
+  fullName_gte: String
+
+  """All values containing the given string."""
+  fullName_contains: String
+
+  """All values not containing the given string."""
+  fullName_not_contains: String
+
+  """All values starting with the given string."""
+  fullName_starts_with: String
+
+  """All values not starting with the given string."""
+  fullName_not_starts_with: String
+
+  """All values ending with the given string."""
+  fullName_ends_with: String
+
+  """All values not ending with the given string."""
+  fullName_not_ends_with: String
   firstName: String
 
   """All values that are not equal to given value."""
@@ -306,6 +385,327 @@ input ContestantWhereUniqueInput {
   id: ID
 }
 
+type Episode implements Node {
+  id: ID!
+  number: Int!
+  title: String!
+  out1: Contestant
+  out2: Contestant
+  out3: Contestant
+  episodeMessage: String
+  airDate: String!
+}
+
+"""A connection to a list of items."""
+type EpisodeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [EpisodeEdge]!
+  aggregate: AggregateEpisode!
+}
+
+input EpisodeCreateInput {
+  number: Int!
+  title: String!
+  episodeMessage: String
+  airDate: String!
+  out1: ContestantCreateOneInput
+  out2: ContestantCreateOneInput
+  out3: ContestantCreateOneInput
+}
+
+"""An edge in a connection."""
+type EpisodeEdge {
+  """The item at the end of the edge."""
+  node: Episode!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum EpisodeOrderByInput {
+  id_ASC
+  id_DESC
+  number_ASC
+  number_DESC
+  title_ASC
+  title_DESC
+  episodeMessage_ASC
+  episodeMessage_DESC
+  airDate_ASC
+  airDate_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type EpisodePreviousValues {
+  id: ID!
+  number: Int!
+  title: String!
+  episodeMessage: String
+  airDate: String!
+}
+
+type EpisodeSubscriptionPayload {
+  mutation: MutationType!
+  node: Episode
+  updatedFields: [String!]
+  previousValues: EpisodePreviousValues
+}
+
+input EpisodeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EpisodeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EpisodeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EpisodeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: EpisodeWhereInput
+}
+
+input EpisodeUpdateInput {
+  number: Int
+  title: String
+  episodeMessage: String
+  airDate: String
+  out1: ContestantUpdateOneInput
+  out2: ContestantUpdateOneInput
+  out3: ContestantUpdateOneInput
+}
+
+input EpisodeUpdateManyMutationInput {
+  number: Int
+  title: String
+  episodeMessage: String
+  airDate: String
+}
+
+input EpisodeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [EpisodeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [EpisodeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [EpisodeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  number: Int
+
+  """All values that are not equal to given value."""
+  number_not: Int
+
+  """All values that are contained in given list."""
+  number_in: [Int!]
+
+  """All values that are not contained in given list."""
+  number_not_in: [Int!]
+
+  """All values less than the given value."""
+  number_lt: Int
+
+  """All values less than or equal the given value."""
+  number_lte: Int
+
+  """All values greater than the given value."""
+  number_gt: Int
+
+  """All values greater than or equal the given value."""
+  number_gte: Int
+  title: String
+
+  """All values that are not equal to given value."""
+  title_not: String
+
+  """All values that are contained in given list."""
+  title_in: [String!]
+
+  """All values that are not contained in given list."""
+  title_not_in: [String!]
+
+  """All values less than the given value."""
+  title_lt: String
+
+  """All values less than or equal the given value."""
+  title_lte: String
+
+  """All values greater than the given value."""
+  title_gt: String
+
+  """All values greater than or equal the given value."""
+  title_gte: String
+
+  """All values containing the given string."""
+  title_contains: String
+
+  """All values not containing the given string."""
+  title_not_contains: String
+
+  """All values starting with the given string."""
+  title_starts_with: String
+
+  """All values not starting with the given string."""
+  title_not_starts_with: String
+
+  """All values ending with the given string."""
+  title_ends_with: String
+
+  """All values not ending with the given string."""
+  title_not_ends_with: String
+  episodeMessage: String
+
+  """All values that are not equal to given value."""
+  episodeMessage_not: String
+
+  """All values that are contained in given list."""
+  episodeMessage_in: [String!]
+
+  """All values that are not contained in given list."""
+  episodeMessage_not_in: [String!]
+
+  """All values less than the given value."""
+  episodeMessage_lt: String
+
+  """All values less than or equal the given value."""
+  episodeMessage_lte: String
+
+  """All values greater than the given value."""
+  episodeMessage_gt: String
+
+  """All values greater than or equal the given value."""
+  episodeMessage_gte: String
+
+  """All values containing the given string."""
+  episodeMessage_contains: String
+
+  """All values not containing the given string."""
+  episodeMessage_not_contains: String
+
+  """All values starting with the given string."""
+  episodeMessage_starts_with: String
+
+  """All values not starting with the given string."""
+  episodeMessage_not_starts_with: String
+
+  """All values ending with the given string."""
+  episodeMessage_ends_with: String
+
+  """All values not ending with the given string."""
+  episodeMessage_not_ends_with: String
+  airDate: String
+
+  """All values that are not equal to given value."""
+  airDate_not: String
+
+  """All values that are contained in given list."""
+  airDate_in: [String!]
+
+  """All values that are not contained in given list."""
+  airDate_not_in: [String!]
+
+  """All values less than the given value."""
+  airDate_lt: String
+
+  """All values less than or equal the given value."""
+  airDate_lte: String
+
+  """All values greater than the given value."""
+  airDate_gt: String
+
+  """All values greater than or equal the given value."""
+  airDate_gte: String
+
+  """All values containing the given string."""
+  airDate_contains: String
+
+  """All values not containing the given string."""
+  airDate_not_contains: String
+
+  """All values starting with the given string."""
+  airDate_starts_with: String
+
+  """All values not starting with the given string."""
+  airDate_not_starts_with: String
+
+  """All values ending with the given string."""
+  airDate_ends_with: String
+
+  """All values not ending with the given string."""
+  airDate_not_ends_with: String
+  out1: ContestantWhereInput
+  out2: ContestantWhereInput
+  out3: ContestantWhereInput
+}
+
+input EpisodeWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -314,23 +714,29 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
-  createContestant(data: ContestantCreateInput!): Contestant!
+  createEpisode(data: EpisodeCreateInput!): Episode!
   createTribe(data: TribeCreateInput!): Tribe!
+  createContestant(data: ContestantCreateInput!): Contestant!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
+  updateEpisode(data: EpisodeUpdateInput!, where: EpisodeWhereUniqueInput!): Episode
   updateTribe(data: TribeUpdateInput!, where: TribeWhereUniqueInput!): Tribe
+  updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
   deleteUser(where: UserWhereUniqueInput!): User
-  deleteContestant(where: ContestantWhereUniqueInput!): Contestant
+  deleteEpisode(where: EpisodeWhereUniqueInput!): Episode
   deleteTribe(where: TribeWhereUniqueInput!): Tribe
+  deleteContestant(where: ContestantWhereUniqueInput!): Contestant
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
+  upsertEpisode(where: EpisodeWhereUniqueInput!, create: EpisodeCreateInput!, update: EpisodeUpdateInput!): Episode!
   upsertTribe(where: TribeWhereUniqueInput!, create: TribeCreateInput!, update: TribeUpdateInput!): Tribe!
+  upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
+  updateManyEpisodes(data: EpisodeUpdateManyMutationInput!, where: EpisodeWhereInput): BatchPayload!
   updateManyTribes(data: TribeUpdateManyMutationInput!, where: TribeWhereInput): BatchPayload!
+  updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyContestants(where: ContestantWhereInput): BatchPayload!
+  deleteManyEpisodes(where: EpisodeWhereInput): BatchPayload!
   deleteManyTribes(where: TribeWhereInput): BatchPayload!
+  deleteManyContestants(where: ContestantWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -362,14 +768,17 @@ type PageInfo {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
+  episodes(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Episode]!
   tribes(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tribe]!
+  contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
   user(where: UserWhereUniqueInput!): User
-  contestant(where: ContestantWhereUniqueInput!): Contestant
+  episode(where: EpisodeWhereUniqueInput!): Episode
   tribe(where: TribeWhereUniqueInput!): Tribe
+  contestant(where: ContestantWhereUniqueInput!): Contestant
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
+  episodesConnection(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EpisodeConnection!
   tribesConnection(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TribeConnection!
+  contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -380,8 +789,9 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
+  episode(where: EpisodeSubscriptionWhereInput): EpisodeSubscriptionPayload
   tribe(where: TribeSubscriptionWhereInput): TribeSubscriptionPayload
+  contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
 }
 
 type Tribe implements Node {

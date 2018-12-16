@@ -4,9 +4,9 @@ const ADD_EPISODE = gql`
   mutation AddEpisode(
     $number: Int!,
     $title: String!,
-    $out1: String!,
-    $out2: String!,
-    $out3: String!,
+    $out1: ID,
+    $out2: ID,
+    $out3: ID,
     $episodeMessage: String!
     $airDate: String!){
       addEpisode(
@@ -18,6 +18,13 @@ const ADD_EPISODE = gql`
         episodeMessage: $episodeMessage,
         airDate: $airDate){
           id
+          number
+          title
+          out1
+          out2
+          out3
+          episodeMessage
+          airDate
         }
   }
 `
@@ -70,3 +77,44 @@ const ADD_POINTS = gql`
 
 export { ADD_POINTS };
 export { ADD_EPISODE };
+
+
+const ADD_TRIBE = gql`
+  mutation AddTribe(
+    $name: String!,
+    $color: String!){
+      addTribe(
+        name: $name,
+        color: $color ){
+          id
+          name
+          color
+      }
+  }
+`
+export { ADD_TRIBE };
+
+
+const ADD_CONTESTANT = gql`
+  mutation AddContestant(
+    $firstName: String!,
+    $lastName: String!,
+    $photoURL: String!,
+    $originalTribe: ID!,
+    $currentTribe: ID!){
+      addContestant(
+        firstName: $firstName,
+        lastName: $lastName,
+        photoURL: $photoURL,
+        originalTribe: $originalTribe
+        currentTribe: $currentTribe
+      ){
+        id
+        fullName
+        firstName
+        lastName
+        photoURL
+      }
+  }
+`
+export { ADD_CONTESTANT };

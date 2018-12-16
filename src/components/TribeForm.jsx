@@ -2,6 +2,9 @@ import React from 'react';
 import gql from 'graphql-tag';
 import { Mutation } from 'react-apollo';
 import styled from 'styled-components';
+import TribeList from './TribeList';
+import { ADD_TRIBE } from './../constants/mutations';
+import { GET_TRIBES } from './../constants/queries';
 
 const Div = styled.div`
   padding: 10px;
@@ -14,19 +17,6 @@ const Button = styled.button`
   color: #010101;
 `
 
-
-const ADD_TRIBE = gql`
-  mutation AddTribe(
-    $name: String!,
-    $color: String!){
-      addTribe(
-        name: $name,
-        color: $color ){
-          id
-      }
-  }
-`
-
 function TribeForm() {
 
   let name;
@@ -34,7 +24,13 @@ function TribeForm() {
 
   return (
     <Div>
-      <Mutation mutation={ADD_TRIBE}>
+      <Mutation mutation={ADD_TRIBE} update={(cache, { data: { addTribe } }) => {
+        const { tribes } = cache.readQuery({ query: GET_TRIBES });
+        cache.writeQuery({
+          query: GET_TRIBES,
+          data: { tribes: tribes.concat([addTribe]) }
+        })
+      }}>
         {(addTribe, { data }) => (
           <Div>
             <form
@@ -77,6 +73,7 @@ function TribeForm() {
           </Div>
         )}
       </Mutation>
+      <TribeList />
     </Div>
   )
 
