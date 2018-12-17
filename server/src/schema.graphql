@@ -1,8 +1,10 @@
-# import User, Episode, Tribe, Contestant from "./generated/prisma.graphql"
+# import User, Episode, Points, Tribe, Contestant from "./generated/prisma.graphql"
 
 type Query {
   tribes: [Tribe!]!
   contestants: [Contestant!]!
+  episodes: [Episode!]!
+  points: [Points!]!
 }
 
 type Mutation {
@@ -23,6 +25,26 @@ type Mutation {
       episodeMessage: String,
       airDate: String!
     ): Episode
+  addPoints(
+      contestant: ID!,
+      episode: ID!,
+      teamReward: Boolean!,
+      teamImmunity: Boolean!,
+      individualReward: Boolean!,
+      individualImmunity: Boolean!,
+      correctVote: Boolean!,
+      recievedVote: Boolean!,
+      out: Boolean!,
+      recievedClue: Boolean!,
+      foundIdol: Boolean!,
+      foundAdvantage: Boolean!,
+      heldIdol: Int!,
+      heldAdvantage: Boolean!,
+      quoted: Boolean!,
+      chosenForReward: Boolean!,
+      juryVotes: Int!,
+      special: Int!
+    ): Points
   addTribe(name: String!, color: String!): Tribe
 
 }

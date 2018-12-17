@@ -25,9 +25,30 @@ type Episode {
   id: ID! @unique
   number: Int!
   title: String!
-  out1: Contestant @relation(name: "ContestantOut1ByEpisode")
-  out2: Contestant @relation(name: "ContestantOut2ByEpisode")
-  out3: Contestant @relation(name: "ContestantOut3ByEpisode")
+  out: [Contestant!]! @relation(name: "ContestantsOutByEpisode")
   episodeMessage: String
   airDate: String!
+}
+
+type Points {
+  id: ID! @unique
+  contestant: Contestant! @relation(name: "ContestantByPoints")
+  episode: Episode! @relation(name: "EpisodeByPoints")
+  teamReward: Int!
+  teamImmunity: Int!
+  individualReward: Int!
+  individualImmunity: Int!
+  correctVote: Int!
+  recievedVote: Int!
+  out: Int!
+  recievedClue: Int!
+  foundIdol: Int!
+  foundAdvantage: Int!
+  heldIdol: Int!
+  heldAdvantage: Int!
+  quoted: Int!
+  chosenForReward: Int!
+  juryVotes: Int!
+  special: Int!
+  total: Int!
 }

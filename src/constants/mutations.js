@@ -20,9 +20,6 @@ const ADD_EPISODE = gql`
           id
           number
           title
-          out1
-          out2
-          out3
           episodeMessage
           airDate
         }
@@ -31,7 +28,7 @@ const ADD_EPISODE = gql`
 
 const ADD_POINTS = gql`
   mutation AddPoints(
-    $contestantID: String!,
+    $contestant: ID!,
     $episodeNumber: Int!,
     $teamReward: Int!,
     $teamImmunity: Int!,
@@ -70,6 +67,27 @@ const ADD_POINTS = gql`
         juryVotes: $juryVotes,
         special: $special,
         total: $total){
+          id
+          contestant{
+            id
+          }
+          episodeNumber
+          teamReward
+          teamImmunity
+          individualReward
+          individualImmunity
+          correctVote
+          recievedVote
+          out
+          recievedClue
+          foundIdol
+          foundAdvantage
+          heldIdol
+          heldAdvantage
+          quoted
+          chosenForReward
+          juryVotes
+          special
           total
         }
   }

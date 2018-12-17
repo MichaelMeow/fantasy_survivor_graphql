@@ -24,3 +24,15 @@ const GET_TRIBES = gql`
   }
 `
 export { GET_TRIBES };
+const GET_EPISODES = gql`
+  {
+    episodes{
+      id
+      number
+      title
+      episodeMessage
+      airDate
+    }
+  }
+`
+export { GET_EPISODES };

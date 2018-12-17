@@ -1,11 +1,15 @@
 # source: https://us1.prisma.sh/michael-harmon/fantasy_survivor/dev
-# timestamp: Sat Dec 15 2018 18:43:16 GMT-0800 (PST)
+# timestamp: Sun Dec 16 2018 19:40:47 GMT-0800 (PST)
 
 type AggregateContestant {
   count: Int!
 }
 
 type AggregateEpisode {
+  count: Int!
+}
+
+type AggregatePoints {
   count: Int!
 }
 
@@ -51,6 +55,11 @@ input ContestantCreateInput {
   currentTribe: TribeCreateOneInput!
 }
 
+input ContestantCreateManyInput {
+  create: [ContestantCreateInput!]
+  connect: [ContestantWhereUniqueInput!]
+}
+
 input ContestantCreateOneInput {
   create: ContestantCreateInput
   connect: ContestantWhereUniqueInput
@@ -88,6 +97,217 @@ type ContestantPreviousValues {
   firstName: String!
   lastName: String!
   photoURL: String!
+}
+
+input ContestantScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ContestantScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ContestantScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ContestantScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  fullName: String
+
+  """All values that are not equal to given value."""
+  fullName_not: String
+
+  """All values that are contained in given list."""
+  fullName_in: [String!]
+
+  """All values that are not contained in given list."""
+  fullName_not_in: [String!]
+
+  """All values less than the given value."""
+  fullName_lt: String
+
+  """All values less than or equal the given value."""
+  fullName_lte: String
+
+  """All values greater than the given value."""
+  fullName_gt: String
+
+  """All values greater than or equal the given value."""
+  fullName_gte: String
+
+  """All values containing the given string."""
+  fullName_contains: String
+
+  """All values not containing the given string."""
+  fullName_not_contains: String
+
+  """All values starting with the given string."""
+  fullName_starts_with: String
+
+  """All values not starting with the given string."""
+  fullName_not_starts_with: String
+
+  """All values ending with the given string."""
+  fullName_ends_with: String
+
+  """All values not ending with the given string."""
+  fullName_not_ends_with: String
+  firstName: String
+
+  """All values that are not equal to given value."""
+  firstName_not: String
+
+  """All values that are contained in given list."""
+  firstName_in: [String!]
+
+  """All values that are not contained in given list."""
+  firstName_not_in: [String!]
+
+  """All values less than the given value."""
+  firstName_lt: String
+
+  """All values less than or equal the given value."""
+  firstName_lte: String
+
+  """All values greater than the given value."""
+  firstName_gt: String
+
+  """All values greater than or equal the given value."""
+  firstName_gte: String
+
+  """All values containing the given string."""
+  firstName_contains: String
+
+  """All values not containing the given string."""
+  firstName_not_contains: String
+
+  """All values starting with the given string."""
+  firstName_starts_with: String
+
+  """All values not starting with the given string."""
+  firstName_not_starts_with: String
+
+  """All values ending with the given string."""
+  firstName_ends_with: String
+
+  """All values not ending with the given string."""
+  firstName_not_ends_with: String
+  lastName: String
+
+  """All values that are not equal to given value."""
+  lastName_not: String
+
+  """All values that are contained in given list."""
+  lastName_in: [String!]
+
+  """All values that are not contained in given list."""
+  lastName_not_in: [String!]
+
+  """All values less than the given value."""
+  lastName_lt: String
+
+  """All values less than or equal the given value."""
+  lastName_lte: String
+
+  """All values greater than the given value."""
+  lastName_gt: String
+
+  """All values greater than or equal the given value."""
+  lastName_gte: String
+
+  """All values containing the given string."""
+  lastName_contains: String
+
+  """All values not containing the given string."""
+  lastName_not_contains: String
+
+  """All values starting with the given string."""
+  lastName_starts_with: String
+
+  """All values not starting with the given string."""
+  lastName_not_starts_with: String
+
+  """All values ending with the given string."""
+  lastName_ends_with: String
+
+  """All values not ending with the given string."""
+  lastName_not_ends_with: String
+  photoURL: String
+
+  """All values that are not equal to given value."""
+  photoURL_not: String
+
+  """All values that are contained in given list."""
+  photoURL_in: [String!]
+
+  """All values that are not contained in given list."""
+  photoURL_not_in: [String!]
+
+  """All values less than the given value."""
+  photoURL_lt: String
+
+  """All values less than or equal the given value."""
+  photoURL_lte: String
+
+  """All values greater than the given value."""
+  photoURL_gt: String
+
+  """All values greater than or equal the given value."""
+  photoURL_gte: String
+
+  """All values containing the given string."""
+  photoURL_contains: String
+
+  """All values not containing the given string."""
+  photoURL_not_contains: String
+
+  """All values starting with the given string."""
+  photoURL_starts_with: String
+
+  """All values not starting with the given string."""
+  photoURL_not_starts_with: String
+
+  """All values ending with the given string."""
+  photoURL_ends_with: String
+
+  """All values not ending with the given string."""
+  photoURL_not_ends_with: String
 }
 
 type ContestantSubscriptionPayload {
@@ -147,6 +367,24 @@ input ContestantUpdateInput {
   currentTribe: TribeUpdateOneRequiredInput
 }
 
+input ContestantUpdateManyDataInput {
+  fullName: String
+  firstName: String
+  lastName: String
+  photoURL: String
+}
+
+input ContestantUpdateManyInput {
+  create: [ContestantCreateInput!]
+  connect: [ContestantWhereUniqueInput!]
+  disconnect: [ContestantWhereUniqueInput!]
+  delete: [ContestantWhereUniqueInput!]
+  update: [ContestantUpdateWithWhereUniqueNestedInput!]
+  updateMany: [ContestantUpdateManyWithWhereNestedInput!]
+  deleteMany: [ContestantScalarWhereInput!]
+  upsert: [ContestantUpsertWithWhereUniqueNestedInput!]
+}
+
 input ContestantUpdateManyMutationInput {
   fullName: String
   firstName: String
@@ -154,16 +392,30 @@ input ContestantUpdateManyMutationInput {
   photoURL: String
 }
 
-input ContestantUpdateOneInput {
+input ContestantUpdateManyWithWhereNestedInput {
+  where: ContestantScalarWhereInput!
+  data: ContestantUpdateManyDataInput!
+}
+
+input ContestantUpdateOneRequiredInput {
   create: ContestantCreateInput
   connect: ContestantWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
   update: ContestantUpdateDataInput
   upsert: ContestantUpsertNestedInput
 }
 
+input ContestantUpdateWithWhereUniqueNestedInput {
+  where: ContestantWhereUniqueInput!
+  data: ContestantUpdateDataInput!
+}
+
 input ContestantUpsertNestedInput {
+  update: ContestantUpdateDataInput!
+  create: ContestantCreateInput!
+}
+
+input ContestantUpsertWithWhereUniqueNestedInput {
+  where: ContestantWhereUniqueInput!
   update: ContestantUpdateDataInput!
   create: ContestantCreateInput!
 }
@@ -389,9 +641,7 @@ type Episode implements Node {
   id: ID!
   number: Int!
   title: String!
-  out1: Contestant
-  out2: Contestant
-  out3: Contestant
+  out(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant!]
   episodeMessage: String
   airDate: String!
 }
@@ -411,9 +661,12 @@ input EpisodeCreateInput {
   title: String!
   episodeMessage: String
   airDate: String!
-  out1: ContestantCreateOneInput
-  out2: ContestantCreateOneInput
-  out3: ContestantCreateOneInput
+  out: ContestantCreateManyInput
+}
+
+input EpisodeCreateOneInput {
+  create: EpisodeCreateInput
+  connect: EpisodeWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -489,14 +742,20 @@ input EpisodeSubscriptionWhereInput {
   node: EpisodeWhereInput
 }
 
+input EpisodeUpdateDataInput {
+  number: Int
+  title: String
+  episodeMessage: String
+  airDate: String
+  out: ContestantUpdateManyInput
+}
+
 input EpisodeUpdateInput {
   number: Int
   title: String
   episodeMessage: String
   airDate: String
-  out1: ContestantUpdateOneInput
-  out2: ContestantUpdateOneInput
-  out3: ContestantUpdateOneInput
+  out: ContestantUpdateManyInput
 }
 
 input EpisodeUpdateManyMutationInput {
@@ -504,6 +763,18 @@ input EpisodeUpdateManyMutationInput {
   title: String
   episodeMessage: String
   airDate: String
+}
+
+input EpisodeUpdateOneRequiredInput {
+  create: EpisodeCreateInput
+  connect: EpisodeWhereUniqueInput
+  update: EpisodeUpdateDataInput
+  upsert: EpisodeUpsertNestedInput
+}
+
+input EpisodeUpsertNestedInput {
+  update: EpisodeUpdateDataInput!
+  create: EpisodeCreateInput!
 }
 
 input EpisodeWhereInput {
@@ -697,9 +968,9 @@ input EpisodeWhereInput {
 
   """All values not ending with the given string."""
   airDate_not_ends_with: String
-  out1: ContestantWhereInput
-  out2: ContestantWhereInput
-  out3: ContestantWhereInput
+  out_every: ContestantWhereInput
+  out_some: ContestantWhereInput
+  out_none: ContestantWhereInput
 }
 
 input EpisodeWhereUniqueInput {
@@ -714,26 +985,32 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createPoints(data: PointsCreateInput!): Points!
   createEpisode(data: EpisodeCreateInput!): Episode!
   createTribe(data: TribeCreateInput!): Tribe!
   createContestant(data: ContestantCreateInput!): Contestant!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updatePoints(data: PointsUpdateInput!, where: PointsWhereUniqueInput!): Points
   updateEpisode(data: EpisodeUpdateInput!, where: EpisodeWhereUniqueInput!): Episode
   updateTribe(data: TribeUpdateInput!, where: TribeWhereUniqueInput!): Tribe
   updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
   deleteUser(where: UserWhereUniqueInput!): User
+  deletePoints(where: PointsWhereUniqueInput!): Points
   deleteEpisode(where: EpisodeWhereUniqueInput!): Episode
   deleteTribe(where: TribeWhereUniqueInput!): Tribe
   deleteContestant(where: ContestantWhereUniqueInput!): Contestant
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertPoints(where: PointsWhereUniqueInput!, create: PointsCreateInput!, update: PointsUpdateInput!): Points!
   upsertEpisode(where: EpisodeWhereUniqueInput!, create: EpisodeCreateInput!, update: EpisodeUpdateInput!): Episode!
   upsertTribe(where: TribeWhereUniqueInput!, create: TribeCreateInput!, update: TribeUpdateInput!): Tribe!
   upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyPointses(data: PointsUpdateManyMutationInput!, where: PointsWhereInput): BatchPayload!
   updateManyEpisodes(data: EpisodeUpdateManyMutationInput!, where: EpisodeWhereInput): BatchPayload!
   updateManyTribes(data: TribeUpdateManyMutationInput!, where: TribeWhereInput): BatchPayload!
   updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyPointses(where: PointsWhereInput): BatchPayload!
   deleteManyEpisodes(where: EpisodeWhereInput): BatchPayload!
   deleteManyTribes(where: TribeWhereInput): BatchPayload!
   deleteManyContestants(where: ContestantWhereInput): BatchPayload!
@@ -766,16 +1043,659 @@ type PageInfo {
   endCursor: String
 }
 
+type Points implements Node {
+  id: ID!
+  contestant: Contestant!
+  episode: Episode!
+  teamReward: Int!
+  teamImmunity: Int!
+  individualReward: Int!
+  individualImmunity: Int!
+  correctVote: Int!
+  recievedVote: Int!
+  out: Int!
+  recievedClue: Int!
+  foundIdol: Int!
+  foundAdvantage: Int!
+  heldIdol: Int!
+  heldAdvantage: Int!
+  quoted: Int!
+  chosenForReward: Int!
+  juryVotes: Int!
+  special: Int!
+  total: Int!
+}
+
+"""A connection to a list of items."""
+type PointsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [PointsEdge]!
+  aggregate: AggregatePoints!
+}
+
+input PointsCreateInput {
+  teamReward: Int!
+  teamImmunity: Int!
+  individualReward: Int!
+  individualImmunity: Int!
+  correctVote: Int!
+  recievedVote: Int!
+  out: Int!
+  recievedClue: Int!
+  foundIdol: Int!
+  foundAdvantage: Int!
+  heldIdol: Int!
+  heldAdvantage: Int!
+  quoted: Int!
+  chosenForReward: Int!
+  juryVotes: Int!
+  special: Int!
+  total: Int!
+  contestant: ContestantCreateOneInput!
+  episode: EpisodeCreateOneInput!
+}
+
+"""An edge in a connection."""
+type PointsEdge {
+  """The item at the end of the edge."""
+  node: Points!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum PointsOrderByInput {
+  id_ASC
+  id_DESC
+  teamReward_ASC
+  teamReward_DESC
+  teamImmunity_ASC
+  teamImmunity_DESC
+  individualReward_ASC
+  individualReward_DESC
+  individualImmunity_ASC
+  individualImmunity_DESC
+  correctVote_ASC
+  correctVote_DESC
+  recievedVote_ASC
+  recievedVote_DESC
+  out_ASC
+  out_DESC
+  recievedClue_ASC
+  recievedClue_DESC
+  foundIdol_ASC
+  foundIdol_DESC
+  foundAdvantage_ASC
+  foundAdvantage_DESC
+  heldIdol_ASC
+  heldIdol_DESC
+  heldAdvantage_ASC
+  heldAdvantage_DESC
+  quoted_ASC
+  quoted_DESC
+  chosenForReward_ASC
+  chosenForReward_DESC
+  juryVotes_ASC
+  juryVotes_DESC
+  special_ASC
+  special_DESC
+  total_ASC
+  total_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PointsPreviousValues {
+  id: ID!
+  teamReward: Int!
+  teamImmunity: Int!
+  individualReward: Int!
+  individualImmunity: Int!
+  correctVote: Int!
+  recievedVote: Int!
+  out: Int!
+  recievedClue: Int!
+  foundIdol: Int!
+  foundAdvantage: Int!
+  heldIdol: Int!
+  heldAdvantage: Int!
+  quoted: Int!
+  chosenForReward: Int!
+  juryVotes: Int!
+  special: Int!
+  total: Int!
+}
+
+type PointsSubscriptionPayload {
+  mutation: MutationType!
+  node: Points
+  updatedFields: [String!]
+  previousValues: PointsPreviousValues
+}
+
+input PointsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PointsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PointsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PointsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: PointsWhereInput
+}
+
+input PointsUpdateInput {
+  teamReward: Int
+  teamImmunity: Int
+  individualReward: Int
+  individualImmunity: Int
+  correctVote: Int
+  recievedVote: Int
+  out: Int
+  recievedClue: Int
+  foundIdol: Int
+  foundAdvantage: Int
+  heldIdol: Int
+  heldAdvantage: Int
+  quoted: Int
+  chosenForReward: Int
+  juryVotes: Int
+  special: Int
+  total: Int
+  contestant: ContestantUpdateOneRequiredInput
+  episode: EpisodeUpdateOneRequiredInput
+}
+
+input PointsUpdateManyMutationInput {
+  teamReward: Int
+  teamImmunity: Int
+  individualReward: Int
+  individualImmunity: Int
+  correctVote: Int
+  recievedVote: Int
+  out: Int
+  recievedClue: Int
+  foundIdol: Int
+  foundAdvantage: Int
+  heldIdol: Int
+  heldAdvantage: Int
+  quoted: Int
+  chosenForReward: Int
+  juryVotes: Int
+  special: Int
+  total: Int
+}
+
+input PointsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PointsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PointsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PointsWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  teamReward: Int
+
+  """All values that are not equal to given value."""
+  teamReward_not: Int
+
+  """All values that are contained in given list."""
+  teamReward_in: [Int!]
+
+  """All values that are not contained in given list."""
+  teamReward_not_in: [Int!]
+
+  """All values less than the given value."""
+  teamReward_lt: Int
+
+  """All values less than or equal the given value."""
+  teamReward_lte: Int
+
+  """All values greater than the given value."""
+  teamReward_gt: Int
+
+  """All values greater than or equal the given value."""
+  teamReward_gte: Int
+  teamImmunity: Int
+
+  """All values that are not equal to given value."""
+  teamImmunity_not: Int
+
+  """All values that are contained in given list."""
+  teamImmunity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  teamImmunity_not_in: [Int!]
+
+  """All values less than the given value."""
+  teamImmunity_lt: Int
+
+  """All values less than or equal the given value."""
+  teamImmunity_lte: Int
+
+  """All values greater than the given value."""
+  teamImmunity_gt: Int
+
+  """All values greater than or equal the given value."""
+  teamImmunity_gte: Int
+  individualReward: Int
+
+  """All values that are not equal to given value."""
+  individualReward_not: Int
+
+  """All values that are contained in given list."""
+  individualReward_in: [Int!]
+
+  """All values that are not contained in given list."""
+  individualReward_not_in: [Int!]
+
+  """All values less than the given value."""
+  individualReward_lt: Int
+
+  """All values less than or equal the given value."""
+  individualReward_lte: Int
+
+  """All values greater than the given value."""
+  individualReward_gt: Int
+
+  """All values greater than or equal the given value."""
+  individualReward_gte: Int
+  individualImmunity: Int
+
+  """All values that are not equal to given value."""
+  individualImmunity_not: Int
+
+  """All values that are contained in given list."""
+  individualImmunity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  individualImmunity_not_in: [Int!]
+
+  """All values less than the given value."""
+  individualImmunity_lt: Int
+
+  """All values less than or equal the given value."""
+  individualImmunity_lte: Int
+
+  """All values greater than the given value."""
+  individualImmunity_gt: Int
+
+  """All values greater than or equal the given value."""
+  individualImmunity_gte: Int
+  correctVote: Int
+
+  """All values that are not equal to given value."""
+  correctVote_not: Int
+
+  """All values that are contained in given list."""
+  correctVote_in: [Int!]
+
+  """All values that are not contained in given list."""
+  correctVote_not_in: [Int!]
+
+  """All values less than the given value."""
+  correctVote_lt: Int
+
+  """All values less than or equal the given value."""
+  correctVote_lte: Int
+
+  """All values greater than the given value."""
+  correctVote_gt: Int
+
+  """All values greater than or equal the given value."""
+  correctVote_gte: Int
+  recievedVote: Int
+
+  """All values that are not equal to given value."""
+  recievedVote_not: Int
+
+  """All values that are contained in given list."""
+  recievedVote_in: [Int!]
+
+  """All values that are not contained in given list."""
+  recievedVote_not_in: [Int!]
+
+  """All values less than the given value."""
+  recievedVote_lt: Int
+
+  """All values less than or equal the given value."""
+  recievedVote_lte: Int
+
+  """All values greater than the given value."""
+  recievedVote_gt: Int
+
+  """All values greater than or equal the given value."""
+  recievedVote_gte: Int
+  out: Int
+
+  """All values that are not equal to given value."""
+  out_not: Int
+
+  """All values that are contained in given list."""
+  out_in: [Int!]
+
+  """All values that are not contained in given list."""
+  out_not_in: [Int!]
+
+  """All values less than the given value."""
+  out_lt: Int
+
+  """All values less than or equal the given value."""
+  out_lte: Int
+
+  """All values greater than the given value."""
+  out_gt: Int
+
+  """All values greater than or equal the given value."""
+  out_gte: Int
+  recievedClue: Int
+
+  """All values that are not equal to given value."""
+  recievedClue_not: Int
+
+  """All values that are contained in given list."""
+  recievedClue_in: [Int!]
+
+  """All values that are not contained in given list."""
+  recievedClue_not_in: [Int!]
+
+  """All values less than the given value."""
+  recievedClue_lt: Int
+
+  """All values less than or equal the given value."""
+  recievedClue_lte: Int
+
+  """All values greater than the given value."""
+  recievedClue_gt: Int
+
+  """All values greater than or equal the given value."""
+  recievedClue_gte: Int
+  foundIdol: Int
+
+  """All values that are not equal to given value."""
+  foundIdol_not: Int
+
+  """All values that are contained in given list."""
+  foundIdol_in: [Int!]
+
+  """All values that are not contained in given list."""
+  foundIdol_not_in: [Int!]
+
+  """All values less than the given value."""
+  foundIdol_lt: Int
+
+  """All values less than or equal the given value."""
+  foundIdol_lte: Int
+
+  """All values greater than the given value."""
+  foundIdol_gt: Int
+
+  """All values greater than or equal the given value."""
+  foundIdol_gte: Int
+  foundAdvantage: Int
+
+  """All values that are not equal to given value."""
+  foundAdvantage_not: Int
+
+  """All values that are contained in given list."""
+  foundAdvantage_in: [Int!]
+
+  """All values that are not contained in given list."""
+  foundAdvantage_not_in: [Int!]
+
+  """All values less than the given value."""
+  foundAdvantage_lt: Int
+
+  """All values less than or equal the given value."""
+  foundAdvantage_lte: Int
+
+  """All values greater than the given value."""
+  foundAdvantage_gt: Int
+
+  """All values greater than or equal the given value."""
+  foundAdvantage_gte: Int
+  heldIdol: Int
+
+  """All values that are not equal to given value."""
+  heldIdol_not: Int
+
+  """All values that are contained in given list."""
+  heldIdol_in: [Int!]
+
+  """All values that are not contained in given list."""
+  heldIdol_not_in: [Int!]
+
+  """All values less than the given value."""
+  heldIdol_lt: Int
+
+  """All values less than or equal the given value."""
+  heldIdol_lte: Int
+
+  """All values greater than the given value."""
+  heldIdol_gt: Int
+
+  """All values greater than or equal the given value."""
+  heldIdol_gte: Int
+  heldAdvantage: Int
+
+  """All values that are not equal to given value."""
+  heldAdvantage_not: Int
+
+  """All values that are contained in given list."""
+  heldAdvantage_in: [Int!]
+
+  """All values that are not contained in given list."""
+  heldAdvantage_not_in: [Int!]
+
+  """All values less than the given value."""
+  heldAdvantage_lt: Int
+
+  """All values less than or equal the given value."""
+  heldAdvantage_lte: Int
+
+  """All values greater than the given value."""
+  heldAdvantage_gt: Int
+
+  """All values greater than or equal the given value."""
+  heldAdvantage_gte: Int
+  quoted: Int
+
+  """All values that are not equal to given value."""
+  quoted_not: Int
+
+  """All values that are contained in given list."""
+  quoted_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quoted_not_in: [Int!]
+
+  """All values less than the given value."""
+  quoted_lt: Int
+
+  """All values less than or equal the given value."""
+  quoted_lte: Int
+
+  """All values greater than the given value."""
+  quoted_gt: Int
+
+  """All values greater than or equal the given value."""
+  quoted_gte: Int
+  chosenForReward: Int
+
+  """All values that are not equal to given value."""
+  chosenForReward_not: Int
+
+  """All values that are contained in given list."""
+  chosenForReward_in: [Int!]
+
+  """All values that are not contained in given list."""
+  chosenForReward_not_in: [Int!]
+
+  """All values less than the given value."""
+  chosenForReward_lt: Int
+
+  """All values less than or equal the given value."""
+  chosenForReward_lte: Int
+
+  """All values greater than the given value."""
+  chosenForReward_gt: Int
+
+  """All values greater than or equal the given value."""
+  chosenForReward_gte: Int
+  juryVotes: Int
+
+  """All values that are not equal to given value."""
+  juryVotes_not: Int
+
+  """All values that are contained in given list."""
+  juryVotes_in: [Int!]
+
+  """All values that are not contained in given list."""
+  juryVotes_not_in: [Int!]
+
+  """All values less than the given value."""
+  juryVotes_lt: Int
+
+  """All values less than or equal the given value."""
+  juryVotes_lte: Int
+
+  """All values greater than the given value."""
+  juryVotes_gt: Int
+
+  """All values greater than or equal the given value."""
+  juryVotes_gte: Int
+  special: Int
+
+  """All values that are not equal to given value."""
+  special_not: Int
+
+  """All values that are contained in given list."""
+  special_in: [Int!]
+
+  """All values that are not contained in given list."""
+  special_not_in: [Int!]
+
+  """All values less than the given value."""
+  special_lt: Int
+
+  """All values less than or equal the given value."""
+  special_lte: Int
+
+  """All values greater than the given value."""
+  special_gt: Int
+
+  """All values greater than or equal the given value."""
+  special_gte: Int
+  total: Int
+
+  """All values that are not equal to given value."""
+  total_not: Int
+
+  """All values that are contained in given list."""
+  total_in: [Int!]
+
+  """All values that are not contained in given list."""
+  total_not_in: [Int!]
+
+  """All values less than the given value."""
+  total_lt: Int
+
+  """All values less than or equal the given value."""
+  total_lte: Int
+
+  """All values greater than the given value."""
+  total_gt: Int
+
+  """All values greater than or equal the given value."""
+  total_gte: Int
+  contestant: ContestantWhereInput
+  episode: EpisodeWhereInput
+}
+
+input PointsWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  pointses(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points]!
   episodes(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Episode]!
   tribes(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tribe]!
   contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
   user(where: UserWhereUniqueInput!): User
+  points(where: PointsWhereUniqueInput!): Points
   episode(where: EpisodeWhereUniqueInput!): Episode
   tribe(where: TribeWhereUniqueInput!): Tribe
   contestant(where: ContestantWhereUniqueInput!): Contestant
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  pointsesConnection(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PointsConnection!
   episodesConnection(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EpisodeConnection!
   tribesConnection(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TribeConnection!
   contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
@@ -789,6 +1709,7 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  points(where: PointsSubscriptionWhereInput): PointsSubscriptionPayload
   episode(where: EpisodeSubscriptionWhereInput): EpisodeSubscriptionPayload
   tribe(where: TribeSubscriptionWhereInput): TribeSubscriptionPayload
   contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
