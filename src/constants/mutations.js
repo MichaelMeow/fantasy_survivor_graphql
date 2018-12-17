@@ -29,27 +29,26 @@ const ADD_EPISODE = gql`
 const ADD_POINTS = gql`
   mutation AddPoints(
     $contestant: ID!,
-    $episodeNumber: Int!,
-    $teamReward: Int!,
-    $teamImmunity: Int!,
-    $individualReward: Int!,
-    $individualImmunity: Int!,
-    $correctVote: Int!,
-    $recievedVote: Int!,
-    $out: Int!,
-    $recievedClue: Int!,
-    $foundIdol: Int!,
-    $foundAdvantage: Int!,
+    $episode: ID!,
+    $teamReward: Boolean!,
+    $teamImmunity: Boolean!,
+    $individualReward: Boolean!,
+    $individualImmunity: Boolean!,
+    $correctVote: Boolean!,
+    $recievedVote: Boolean!,
+    $out: Boolean!,
+    $recievedClue: Boolean!,
+    $foundIdol: Boolean!,
+    $foundAdvantage: Boolean!,
     $heldIdol: Int!,
-    $heldAdvantage: Int!,
-    $quoted: Int!,
-    $chosenForReward: Int!,
+    $heldAdvantage: Boolean!,
+    $quoted: Boolean!,
+    $chosenForReward: Boolean!,
     $juryVotes: Int!,
-    $special: Int!,
-    $total: Int!){
+    $special: Int!){
       addPoints(
-        contestantID: $contestantID,
-        episodeNumber: $episodeNumber,
+        contestant: $contestant,
+        episode: $episode,
         teamReward: $teamReward,
         teamImmunity: $teamImmunity,
         individualReward: $individualReward,
@@ -65,13 +64,11 @@ const ADD_POINTS = gql`
         quoted: $quoted,
         chosenForReward: $chosenForReward,
         juryVotes: $juryVotes,
-        special: $special,
-        total: $total){
+        special: $special){
           id
           contestant{
             id
           }
-          episodeNumber
           teamReward
           teamImmunity
           individualReward

@@ -20,23 +20,9 @@ function EpisodeFormContainer(props) {
   let episodeMessage;
   let airDate;
 
-  function handleAddEpisode(addEpisode, episodes){
-    const newEpisodeNumber = episodes.length + 1;
 
-    addEpisode({
-      variables: {
-        number: newEpisodeNumber,
-        title: title.value,
-        out1: out1.value,
-        out2: out2.value,
-        out3: out3.value,
-        episodeMessage: episodeMessage.value,
-        airDate: airDate.value,
-      }
-    });
-  }
 
-  function handleAddPoints(addPoints, contestant, e, number){
+  function handleAddPoints(addPoints, contestant, e, number, newEpisodeID){
     const teamReward = e.target[`teamReward${contestant.id}`].checked;
     const teamImmunity = e.target[`teamImmunity${contestant.id}`].checked;
     const individualReward = e.target[`individualReward${contestant.id}`].checked;
@@ -58,7 +44,7 @@ function EpisodeFormContainer(props) {
     addPoints({
       variables: {
         contestant: contestant.id,
-        episodeNumber: "how do i get episode id?",
+        episode: newEpisodeID,
         teamReward: teamReward,
         teamImmunity: teamImmunity,
         individualReward: individualReward,
@@ -107,12 +93,26 @@ function EpisodeFormContainer(props) {
                     <ApolloConsumer>
                     {client => (
                     <form onSubmit={e => {
+                      e.persist();
                       e.preventDefault();
                       if (!number.value){
-                        handleAddEpisode(addEpisode, episodesData)
-                        
-                          console.log(client.readQuery({query: GET_EPISODES}))
-
+                        const newEpisodeNumber = episodesData.length + 1;
+                        addEpisode({
+                          variables: {
+                            number: newEpisodeNumber,
+                            title: title.value,
+                            out1: out1.value,
+                            out2: out2.value,
+                            out3: out3.value,
+                            episodeMessage: episodeMessage.value,
+                            airDate: airDate.value,
+                          }
+                        }).then(res => {
+                          const newEpisodeID = res.data.addEpisode.id
+                          contestants.map(contestant => {
+                            handleAddPoints(addPoints, contestant, e, number, newEpisodeID);
+                          })
+                        })
                       };
                       client.writeData({ data: { isEpisodeSubmitted: true } })
                       return null;
