@@ -74,8 +74,8 @@ function ScoringTableRow({contestant}) {
               if (error) return `Error! ${error.message}`;
 
               return (
-                <select id={`${contestant.id}tribe`}>
-                  <option >-tribe-</option>
+                <select id={`tribe${contestant.id}`}>
+                  <option key={contestant.id} value={contestant.currentTribe.id}>-tribe-</option>
                   {data.tribes.map(tribe => (
                     <option key={tribe.id} value={tribe.id}>
                       {tribe.name}

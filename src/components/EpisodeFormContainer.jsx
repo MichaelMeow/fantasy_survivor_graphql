@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import { Query } from 'react-apollo';
 import ScoringTable from './ScoringTable';
 import styled from 'styled-components';
-import { ADD_EPISODE, ADD_POINTS } from './../constants/mutations';
+import { ADD_EPISODE, ADD_POINTS, UPDATE_TRIBE } from './../constants/mutations';
 import { GET_CONTESTANTS, GET_EPISODES } from './../constants/queries';
 import { ApolloConsumer } from 'react-apollo';
 
@@ -64,6 +64,16 @@ function EpisodeFormContainer(props) {
         total: total,
       }
     })
+  };
+
+  function handleUpdateTribe(updateTribe, contestant, e){
+    updateTribe({
+      variables: {
+        tribe: e.target[`tribe${contestant.id}`].value,
+        contestant: contestant.id
+      }
+    })
+    console.log(e.target[`tribe${contestant.id}`].value);
   }
 
   return (
@@ -90,6 +100,8 @@ function EpisodeFormContainer(props) {
                 {(addEpisode, { data }) => (
                   <Mutation mutation={ADD_POINTS}>
                   {(addPoints, { data }) => (
+                    <Mutation mutation={UPDATE_TRIBE}>
+                    {(updateTribe, { data }) => (
                     <ApolloConsumer>
                     {client => (
                     <form onSubmit={e => {
@@ -111,6 +123,7 @@ function EpisodeFormContainer(props) {
                           const newEpisodeID = res.data.addEpisode.id
                           contestants.map(contestant => {
                             handleAddPoints(addPoints, contestant, e, number, newEpisodeID);
+                            handleUpdateTribe(updateTribe, contestant, e);
                           })
                         })
                       };
@@ -188,6 +201,8 @@ function EpisodeFormContainer(props) {
                   )}
                   </ApolloConsumer>
                   )}
+                </Mutation>
+                )}
                 </Mutation>
                 )}
               </Mutation>

@@ -133,3 +133,21 @@ const ADD_CONTESTANT = gql`
   }
 `
 export { ADD_CONTESTANT };
+
+const UPDATE_TRIBE = gql`
+  mutation UpdateTribe(
+    $tribe: ID!
+    $contestant: ID!){
+      updateContestant(
+        tribe: $tribe,
+        contestant: $contestant
+        ){
+        id
+        currentTribe{
+          id
+        }
+      }
+  }
+`
+
+export { UPDATE_TRIBE };

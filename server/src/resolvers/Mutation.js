@@ -104,10 +104,22 @@ async function addTribe(parent, args, context, info) {
   }, info)
 }
 
+async function updateContestant(parent, args, context, info) {
+  return context.db.mutation.updateContestant({
+    data: {
+      currentTribe: {connect: {id: args.tribe}}
+    },
+    where: {
+      id: args.contestant
+    }
+  }, info)
+}
+
 module.exports = {
   signup,
   addContestant,
   addTribe,
   addEpisode,
   addPoints,
+  updateContestant,
 }

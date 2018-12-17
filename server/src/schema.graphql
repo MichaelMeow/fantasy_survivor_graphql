@@ -46,5 +46,6 @@ type Mutation {
       special: Int!
     ): Points
   addTribe(name: String!, color: String!): Tribe
+  updateContestant(tribe: ID!, contestant: ID!): Contestant
 
 }
