@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-harmon/fantasy_survivor/dev
-# timestamp: Sun Dec 16 2018 19:40:47 GMT-0800 (PST)
+# timestamp: Mon Dec 17 2018 12:12:21 GMT-0800 (PST)
 
 type AggregateContestant {
   count: Int!
@@ -34,6 +34,7 @@ type Contestant implements Node {
   photoURL: String!
   originalTribe: Tribe!
   currentTribe: Tribe!
+  points(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points!]
 }
 
 """A connection to a list of items."""
@@ -52,7 +53,8 @@ input ContestantCreateInput {
   lastName: String!
   photoURL: String!
   originalTribe: TribeCreateOneInput!
-  currentTribe: TribeCreateOneInput!
+  currentTribe: TribeCreateOneWithoutContestantsInput!
+  points: PointsCreateManyWithoutContestantInput
 }
 
 input ContestantCreateManyInput {
@@ -60,9 +62,32 @@ input ContestantCreateManyInput {
   connect: [ContestantWhereUniqueInput!]
 }
 
-input ContestantCreateOneInput {
-  create: ContestantCreateInput
+input ContestantCreateManyWithoutCurrentTribeInput {
+  create: [ContestantCreateWithoutCurrentTribeInput!]
+  connect: [ContestantWhereUniqueInput!]
+}
+
+input ContestantCreateOneWithoutPointsInput {
+  create: ContestantCreateWithoutPointsInput
   connect: ContestantWhereUniqueInput
+}
+
+input ContestantCreateWithoutCurrentTribeInput {
+  fullName: String!
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+  originalTribe: TribeCreateOneInput!
+  points: PointsCreateManyWithoutContestantInput
+}
+
+input ContestantCreateWithoutPointsInput {
+  fullName: String!
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+  originalTribe: TribeCreateOneInput!
+  currentTribe: TribeCreateOneWithoutContestantsInput!
 }
 
 """An edge in a connection."""
@@ -355,7 +380,8 @@ input ContestantUpdateDataInput {
   lastName: String
   photoURL: String
   originalTribe: TribeUpdateOneRequiredInput
-  currentTribe: TribeUpdateOneRequiredInput
+  currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
+  points: PointsUpdateManyWithoutContestantInput
 }
 
 input ContestantUpdateInput {
@@ -364,7 +390,8 @@ input ContestantUpdateInput {
   lastName: String
   photoURL: String
   originalTribe: TribeUpdateOneRequiredInput
-  currentTribe: TribeUpdateOneRequiredInput
+  currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
+  points: PointsUpdateManyWithoutContestantInput
 }
 
 input ContestantUpdateManyDataInput {
@@ -392,16 +419,45 @@ input ContestantUpdateManyMutationInput {
   photoURL: String
 }
 
+input ContestantUpdateManyWithoutCurrentTribeInput {
+  create: [ContestantCreateWithoutCurrentTribeInput!]
+  connect: [ContestantWhereUniqueInput!]
+  disconnect: [ContestantWhereUniqueInput!]
+  delete: [ContestantWhereUniqueInput!]
+  update: [ContestantUpdateWithWhereUniqueWithoutCurrentTribeInput!]
+  updateMany: [ContestantUpdateManyWithWhereNestedInput!]
+  deleteMany: [ContestantScalarWhereInput!]
+  upsert: [ContestantUpsertWithWhereUniqueWithoutCurrentTribeInput!]
+}
+
 input ContestantUpdateManyWithWhereNestedInput {
   where: ContestantScalarWhereInput!
   data: ContestantUpdateManyDataInput!
 }
 
-input ContestantUpdateOneRequiredInput {
-  create: ContestantCreateInput
+input ContestantUpdateOneRequiredWithoutPointsInput {
+  create: ContestantCreateWithoutPointsInput
   connect: ContestantWhereUniqueInput
-  update: ContestantUpdateDataInput
-  upsert: ContestantUpsertNestedInput
+  update: ContestantUpdateWithoutPointsDataInput
+  upsert: ContestantUpsertWithoutPointsInput
+}
+
+input ContestantUpdateWithoutCurrentTribeDataInput {
+  fullName: String
+  firstName: String
+  lastName: String
+  photoURL: String
+  originalTribe: TribeUpdateOneRequiredInput
+  points: PointsUpdateManyWithoutContestantInput
+}
+
+input ContestantUpdateWithoutPointsDataInput {
+  fullName: String
+  firstName: String
+  lastName: String
+  photoURL: String
+  originalTribe: TribeUpdateOneRequiredInput
+  currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
 }
 
 input ContestantUpdateWithWhereUniqueNestedInput {
@@ -409,15 +465,26 @@ input ContestantUpdateWithWhereUniqueNestedInput {
   data: ContestantUpdateDataInput!
 }
 
-input ContestantUpsertNestedInput {
-  update: ContestantUpdateDataInput!
-  create: ContestantCreateInput!
+input ContestantUpdateWithWhereUniqueWithoutCurrentTribeInput {
+  where: ContestantWhereUniqueInput!
+  data: ContestantUpdateWithoutCurrentTribeDataInput!
+}
+
+input ContestantUpsertWithoutPointsInput {
+  update: ContestantUpdateWithoutPointsDataInput!
+  create: ContestantCreateWithoutPointsInput!
 }
 
 input ContestantUpsertWithWhereUniqueNestedInput {
   where: ContestantWhereUniqueInput!
   update: ContestantUpdateDataInput!
   create: ContestantCreateInput!
+}
+
+input ContestantUpsertWithWhereUniqueWithoutCurrentTribeInput {
+  where: ContestantWhereUniqueInput!
+  update: ContestantUpdateWithoutCurrentTribeDataInput!
+  create: ContestantCreateWithoutCurrentTribeInput!
 }
 
 input ContestantWhereInput {
@@ -631,6 +698,9 @@ input ContestantWhereInput {
   photoURL_not_ends_with: String
   originalTribe: TribeWhereInput
   currentTribe: TribeWhereInput
+  points_every: PointsWhereInput
+  points_some: PointsWhereInput
+  points_none: PointsWhereInput
 }
 
 input ContestantWhereUniqueInput {
@@ -644,6 +714,7 @@ type Episode implements Node {
   out(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant!]
   episodeMessage: String
   airDate: String!
+  points(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points!]
 }
 
 """A connection to a list of items."""
@@ -662,11 +733,20 @@ input EpisodeCreateInput {
   episodeMessage: String
   airDate: String!
   out: ContestantCreateManyInput
+  points: PointsCreateManyWithoutEpisodeInput
 }
 
-input EpisodeCreateOneInput {
-  create: EpisodeCreateInput
+input EpisodeCreateOneWithoutPointsInput {
+  create: EpisodeCreateWithoutPointsInput
   connect: EpisodeWhereUniqueInput
+}
+
+input EpisodeCreateWithoutPointsInput {
+  number: Int!
+  title: String!
+  episodeMessage: String
+  airDate: String!
+  out: ContestantCreateManyInput
 }
 
 """An edge in a connection."""
@@ -742,20 +822,13 @@ input EpisodeSubscriptionWhereInput {
   node: EpisodeWhereInput
 }
 
-input EpisodeUpdateDataInput {
-  number: Int
-  title: String
-  episodeMessage: String
-  airDate: String
-  out: ContestantUpdateManyInput
-}
-
 input EpisodeUpdateInput {
   number: Int
   title: String
   episodeMessage: String
   airDate: String
   out: ContestantUpdateManyInput
+  points: PointsUpdateManyWithoutEpisodeInput
 }
 
 input EpisodeUpdateManyMutationInput {
@@ -765,16 +838,24 @@ input EpisodeUpdateManyMutationInput {
   airDate: String
 }
 
-input EpisodeUpdateOneRequiredInput {
-  create: EpisodeCreateInput
+input EpisodeUpdateOneRequiredWithoutPointsInput {
+  create: EpisodeCreateWithoutPointsInput
   connect: EpisodeWhereUniqueInput
-  update: EpisodeUpdateDataInput
-  upsert: EpisodeUpsertNestedInput
+  update: EpisodeUpdateWithoutPointsDataInput
+  upsert: EpisodeUpsertWithoutPointsInput
 }
 
-input EpisodeUpsertNestedInput {
-  update: EpisodeUpdateDataInput!
-  create: EpisodeCreateInput!
+input EpisodeUpdateWithoutPointsDataInput {
+  number: Int
+  title: String
+  episodeMessage: String
+  airDate: String
+  out: ContestantUpdateManyInput
+}
+
+input EpisodeUpsertWithoutPointsInput {
+  update: EpisodeUpdateWithoutPointsDataInput!
+  create: EpisodeCreateWithoutPointsInput!
 }
 
 input EpisodeWhereInput {
@@ -971,6 +1052,9 @@ input EpisodeWhereInput {
   out_every: ContestantWhereInput
   out_some: ContestantWhereInput
   out_none: ContestantWhereInput
+  points_every: PointsWhereInput
+  points_some: PointsWhereInput
+  points_none: PointsWhereInput
 }
 
 input EpisodeWhereUniqueInput {
@@ -985,33 +1069,33 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
-  createPoints(data: PointsCreateInput!): Points!
   createEpisode(data: EpisodeCreateInput!): Episode!
+  createPoints(data: PointsCreateInput!): Points!
   createTribe(data: TribeCreateInput!): Tribe!
   createContestant(data: ContestantCreateInput!): Contestant!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updatePoints(data: PointsUpdateInput!, where: PointsWhereUniqueInput!): Points
   updateEpisode(data: EpisodeUpdateInput!, where: EpisodeWhereUniqueInput!): Episode
+  updatePoints(data: PointsUpdateInput!, where: PointsWhereUniqueInput!): Points
   updateTribe(data: TribeUpdateInput!, where: TribeWhereUniqueInput!): Tribe
   updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
   deleteUser(where: UserWhereUniqueInput!): User
-  deletePoints(where: PointsWhereUniqueInput!): Points
   deleteEpisode(where: EpisodeWhereUniqueInput!): Episode
+  deletePoints(where: PointsWhereUniqueInput!): Points
   deleteTribe(where: TribeWhereUniqueInput!): Tribe
   deleteContestant(where: ContestantWhereUniqueInput!): Contestant
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertPoints(where: PointsWhereUniqueInput!, create: PointsCreateInput!, update: PointsUpdateInput!): Points!
   upsertEpisode(where: EpisodeWhereUniqueInput!, create: EpisodeCreateInput!, update: EpisodeUpdateInput!): Episode!
+  upsertPoints(where: PointsWhereUniqueInput!, create: PointsCreateInput!, update: PointsUpdateInput!): Points!
   upsertTribe(where: TribeWhereUniqueInput!, create: TribeCreateInput!, update: TribeUpdateInput!): Tribe!
   upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyPointses(data: PointsUpdateManyMutationInput!, where: PointsWhereInput): BatchPayload!
   updateManyEpisodes(data: EpisodeUpdateManyMutationInput!, where: EpisodeWhereInput): BatchPayload!
+  updateManyPointses(data: PointsUpdateManyMutationInput!, where: PointsWhereInput): BatchPayload!
   updateManyTribes(data: TribeUpdateManyMutationInput!, where: TribeWhereInput): BatchPayload!
   updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyPointses(where: PointsWhereInput): BatchPayload!
   deleteManyEpisodes(where: EpisodeWhereInput): BatchPayload!
+  deleteManyPointses(where: PointsWhereInput): BatchPayload!
   deleteManyTribes(where: TribeWhereInput): BatchPayload!
   deleteManyContestants(where: ContestantWhereInput): BatchPayload!
 }
@@ -1094,8 +1178,60 @@ input PointsCreateInput {
   juryVotes: Int!
   special: Int!
   total: Int!
-  contestant: ContestantCreateOneInput!
-  episode: EpisodeCreateOneInput!
+  contestant: ContestantCreateOneWithoutPointsInput!
+  episode: EpisodeCreateOneWithoutPointsInput!
+}
+
+input PointsCreateManyWithoutContestantInput {
+  create: [PointsCreateWithoutContestantInput!]
+  connect: [PointsWhereUniqueInput!]
+}
+
+input PointsCreateManyWithoutEpisodeInput {
+  create: [PointsCreateWithoutEpisodeInput!]
+  connect: [PointsWhereUniqueInput!]
+}
+
+input PointsCreateWithoutContestantInput {
+  teamReward: Int!
+  teamImmunity: Int!
+  individualReward: Int!
+  individualImmunity: Int!
+  correctVote: Int!
+  recievedVote: Int!
+  out: Int!
+  recievedClue: Int!
+  foundIdol: Int!
+  foundAdvantage: Int!
+  heldIdol: Int!
+  heldAdvantage: Int!
+  quoted: Int!
+  chosenForReward: Int!
+  juryVotes: Int!
+  special: Int!
+  total: Int!
+  episode: EpisodeCreateOneWithoutPointsInput!
+}
+
+input PointsCreateWithoutEpisodeInput {
+  teamReward: Int!
+  teamImmunity: Int!
+  individualReward: Int!
+  individualImmunity: Int!
+  correctVote: Int!
+  recievedVote: Int!
+  out: Int!
+  recievedClue: Int!
+  foundIdol: Int!
+  foundAdvantage: Int!
+  heldIdol: Int!
+  heldAdvantage: Int!
+  quoted: Int!
+  chosenForReward: Int!
+  juryVotes: Int!
+  special: Int!
+  total: Int!
+  contestant: ContestantCreateOneWithoutPointsInput!
 }
 
 """An edge in a connection."""
@@ -1171,6 +1307,431 @@ type PointsPreviousValues {
   total: Int!
 }
 
+input PointsScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [PointsScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [PointsScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [PointsScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  teamReward: Int
+
+  """All values that are not equal to given value."""
+  teamReward_not: Int
+
+  """All values that are contained in given list."""
+  teamReward_in: [Int!]
+
+  """All values that are not contained in given list."""
+  teamReward_not_in: [Int!]
+
+  """All values less than the given value."""
+  teamReward_lt: Int
+
+  """All values less than or equal the given value."""
+  teamReward_lte: Int
+
+  """All values greater than the given value."""
+  teamReward_gt: Int
+
+  """All values greater than or equal the given value."""
+  teamReward_gte: Int
+  teamImmunity: Int
+
+  """All values that are not equal to given value."""
+  teamImmunity_not: Int
+
+  """All values that are contained in given list."""
+  teamImmunity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  teamImmunity_not_in: [Int!]
+
+  """All values less than the given value."""
+  teamImmunity_lt: Int
+
+  """All values less than or equal the given value."""
+  teamImmunity_lte: Int
+
+  """All values greater than the given value."""
+  teamImmunity_gt: Int
+
+  """All values greater than or equal the given value."""
+  teamImmunity_gte: Int
+  individualReward: Int
+
+  """All values that are not equal to given value."""
+  individualReward_not: Int
+
+  """All values that are contained in given list."""
+  individualReward_in: [Int!]
+
+  """All values that are not contained in given list."""
+  individualReward_not_in: [Int!]
+
+  """All values less than the given value."""
+  individualReward_lt: Int
+
+  """All values less than or equal the given value."""
+  individualReward_lte: Int
+
+  """All values greater than the given value."""
+  individualReward_gt: Int
+
+  """All values greater than or equal the given value."""
+  individualReward_gte: Int
+  individualImmunity: Int
+
+  """All values that are not equal to given value."""
+  individualImmunity_not: Int
+
+  """All values that are contained in given list."""
+  individualImmunity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  individualImmunity_not_in: [Int!]
+
+  """All values less than the given value."""
+  individualImmunity_lt: Int
+
+  """All values less than or equal the given value."""
+  individualImmunity_lte: Int
+
+  """All values greater than the given value."""
+  individualImmunity_gt: Int
+
+  """All values greater than or equal the given value."""
+  individualImmunity_gte: Int
+  correctVote: Int
+
+  """All values that are not equal to given value."""
+  correctVote_not: Int
+
+  """All values that are contained in given list."""
+  correctVote_in: [Int!]
+
+  """All values that are not contained in given list."""
+  correctVote_not_in: [Int!]
+
+  """All values less than the given value."""
+  correctVote_lt: Int
+
+  """All values less than or equal the given value."""
+  correctVote_lte: Int
+
+  """All values greater than the given value."""
+  correctVote_gt: Int
+
+  """All values greater than or equal the given value."""
+  correctVote_gte: Int
+  recievedVote: Int
+
+  """All values that are not equal to given value."""
+  recievedVote_not: Int
+
+  """All values that are contained in given list."""
+  recievedVote_in: [Int!]
+
+  """All values that are not contained in given list."""
+  recievedVote_not_in: [Int!]
+
+  """All values less than the given value."""
+  recievedVote_lt: Int
+
+  """All values less than or equal the given value."""
+  recievedVote_lte: Int
+
+  """All values greater than the given value."""
+  recievedVote_gt: Int
+
+  """All values greater than or equal the given value."""
+  recievedVote_gte: Int
+  out: Int
+
+  """All values that are not equal to given value."""
+  out_not: Int
+
+  """All values that are contained in given list."""
+  out_in: [Int!]
+
+  """All values that are not contained in given list."""
+  out_not_in: [Int!]
+
+  """All values less than the given value."""
+  out_lt: Int
+
+  """All values less than or equal the given value."""
+  out_lte: Int
+
+  """All values greater than the given value."""
+  out_gt: Int
+
+  """All values greater than or equal the given value."""
+  out_gte: Int
+  recievedClue: Int
+
+  """All values that are not equal to given value."""
+  recievedClue_not: Int
+
+  """All values that are contained in given list."""
+  recievedClue_in: [Int!]
+
+  """All values that are not contained in given list."""
+  recievedClue_not_in: [Int!]
+
+  """All values less than the given value."""
+  recievedClue_lt: Int
+
+  """All values less than or equal the given value."""
+  recievedClue_lte: Int
+
+  """All values greater than the given value."""
+  recievedClue_gt: Int
+
+  """All values greater than or equal the given value."""
+  recievedClue_gte: Int
+  foundIdol: Int
+
+  """All values that are not equal to given value."""
+  foundIdol_not: Int
+
+  """All values that are contained in given list."""
+  foundIdol_in: [Int!]
+
+  """All values that are not contained in given list."""
+  foundIdol_not_in: [Int!]
+
+  """All values less than the given value."""
+  foundIdol_lt: Int
+
+  """All values less than or equal the given value."""
+  foundIdol_lte: Int
+
+  """All values greater than the given value."""
+  foundIdol_gt: Int
+
+  """All values greater than or equal the given value."""
+  foundIdol_gte: Int
+  foundAdvantage: Int
+
+  """All values that are not equal to given value."""
+  foundAdvantage_not: Int
+
+  """All values that are contained in given list."""
+  foundAdvantage_in: [Int!]
+
+  """All values that are not contained in given list."""
+  foundAdvantage_not_in: [Int!]
+
+  """All values less than the given value."""
+  foundAdvantage_lt: Int
+
+  """All values less than or equal the given value."""
+  foundAdvantage_lte: Int
+
+  """All values greater than the given value."""
+  foundAdvantage_gt: Int
+
+  """All values greater than or equal the given value."""
+  foundAdvantage_gte: Int
+  heldIdol: Int
+
+  """All values that are not equal to given value."""
+  heldIdol_not: Int
+
+  """All values that are contained in given list."""
+  heldIdol_in: [Int!]
+
+  """All values that are not contained in given list."""
+  heldIdol_not_in: [Int!]
+
+  """All values less than the given value."""
+  heldIdol_lt: Int
+
+  """All values less than or equal the given value."""
+  heldIdol_lte: Int
+
+  """All values greater than the given value."""
+  heldIdol_gt: Int
+
+  """All values greater than or equal the given value."""
+  heldIdol_gte: Int
+  heldAdvantage: Int
+
+  """All values that are not equal to given value."""
+  heldAdvantage_not: Int
+
+  """All values that are contained in given list."""
+  heldAdvantage_in: [Int!]
+
+  """All values that are not contained in given list."""
+  heldAdvantage_not_in: [Int!]
+
+  """All values less than the given value."""
+  heldAdvantage_lt: Int
+
+  """All values less than or equal the given value."""
+  heldAdvantage_lte: Int
+
+  """All values greater than the given value."""
+  heldAdvantage_gt: Int
+
+  """All values greater than or equal the given value."""
+  heldAdvantage_gte: Int
+  quoted: Int
+
+  """All values that are not equal to given value."""
+  quoted_not: Int
+
+  """All values that are contained in given list."""
+  quoted_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quoted_not_in: [Int!]
+
+  """All values less than the given value."""
+  quoted_lt: Int
+
+  """All values less than or equal the given value."""
+  quoted_lte: Int
+
+  """All values greater than the given value."""
+  quoted_gt: Int
+
+  """All values greater than or equal the given value."""
+  quoted_gte: Int
+  chosenForReward: Int
+
+  """All values that are not equal to given value."""
+  chosenForReward_not: Int
+
+  """All values that are contained in given list."""
+  chosenForReward_in: [Int!]
+
+  """All values that are not contained in given list."""
+  chosenForReward_not_in: [Int!]
+
+  """All values less than the given value."""
+  chosenForReward_lt: Int
+
+  """All values less than or equal the given value."""
+  chosenForReward_lte: Int
+
+  """All values greater than the given value."""
+  chosenForReward_gt: Int
+
+  """All values greater than or equal the given value."""
+  chosenForReward_gte: Int
+  juryVotes: Int
+
+  """All values that are not equal to given value."""
+  juryVotes_not: Int
+
+  """All values that are contained in given list."""
+  juryVotes_in: [Int!]
+
+  """All values that are not contained in given list."""
+  juryVotes_not_in: [Int!]
+
+  """All values less than the given value."""
+  juryVotes_lt: Int
+
+  """All values less than or equal the given value."""
+  juryVotes_lte: Int
+
+  """All values greater than the given value."""
+  juryVotes_gt: Int
+
+  """All values greater than or equal the given value."""
+  juryVotes_gte: Int
+  special: Int
+
+  """All values that are not equal to given value."""
+  special_not: Int
+
+  """All values that are contained in given list."""
+  special_in: [Int!]
+
+  """All values that are not contained in given list."""
+  special_not_in: [Int!]
+
+  """All values less than the given value."""
+  special_lt: Int
+
+  """All values less than or equal the given value."""
+  special_lte: Int
+
+  """All values greater than the given value."""
+  special_gt: Int
+
+  """All values greater than or equal the given value."""
+  special_gte: Int
+  total: Int
+
+  """All values that are not equal to given value."""
+  total_not: Int
+
+  """All values that are contained in given list."""
+  total_in: [Int!]
+
+  """All values that are not contained in given list."""
+  total_not_in: [Int!]
+
+  """All values less than the given value."""
+  total_lt: Int
+
+  """All values less than or equal the given value."""
+  total_lte: Int
+
+  """All values greater than the given value."""
+  total_gt: Int
+
+  """All values greater than or equal the given value."""
+  total_gte: Int
+}
+
 type PointsSubscriptionPayload {
   mutation: MutationType!
   node: Points
@@ -1228,8 +1789,28 @@ input PointsUpdateInput {
   juryVotes: Int
   special: Int
   total: Int
-  contestant: ContestantUpdateOneRequiredInput
-  episode: EpisodeUpdateOneRequiredInput
+  contestant: ContestantUpdateOneRequiredWithoutPointsInput
+  episode: EpisodeUpdateOneRequiredWithoutPointsInput
+}
+
+input PointsUpdateManyDataInput {
+  teamReward: Int
+  teamImmunity: Int
+  individualReward: Int
+  individualImmunity: Int
+  correctVote: Int
+  recievedVote: Int
+  out: Int
+  recievedClue: Int
+  foundIdol: Int
+  foundAdvantage: Int
+  heldIdol: Int
+  heldAdvantage: Int
+  quoted: Int
+  chosenForReward: Int
+  juryVotes: Int
+  special: Int
+  total: Int
 }
 
 input PointsUpdateManyMutationInput {
@@ -1250,6 +1831,97 @@ input PointsUpdateManyMutationInput {
   juryVotes: Int
   special: Int
   total: Int
+}
+
+input PointsUpdateManyWithoutContestantInput {
+  create: [PointsCreateWithoutContestantInput!]
+  connect: [PointsWhereUniqueInput!]
+  disconnect: [PointsWhereUniqueInput!]
+  delete: [PointsWhereUniqueInput!]
+  update: [PointsUpdateWithWhereUniqueWithoutContestantInput!]
+  updateMany: [PointsUpdateManyWithWhereNestedInput!]
+  deleteMany: [PointsScalarWhereInput!]
+  upsert: [PointsUpsertWithWhereUniqueWithoutContestantInput!]
+}
+
+input PointsUpdateManyWithoutEpisodeInput {
+  create: [PointsCreateWithoutEpisodeInput!]
+  connect: [PointsWhereUniqueInput!]
+  disconnect: [PointsWhereUniqueInput!]
+  delete: [PointsWhereUniqueInput!]
+  update: [PointsUpdateWithWhereUniqueWithoutEpisodeInput!]
+  updateMany: [PointsUpdateManyWithWhereNestedInput!]
+  deleteMany: [PointsScalarWhereInput!]
+  upsert: [PointsUpsertWithWhereUniqueWithoutEpisodeInput!]
+}
+
+input PointsUpdateManyWithWhereNestedInput {
+  where: PointsScalarWhereInput!
+  data: PointsUpdateManyDataInput!
+}
+
+input PointsUpdateWithoutContestantDataInput {
+  teamReward: Int
+  teamImmunity: Int
+  individualReward: Int
+  individualImmunity: Int
+  correctVote: Int
+  recievedVote: Int
+  out: Int
+  recievedClue: Int
+  foundIdol: Int
+  foundAdvantage: Int
+  heldIdol: Int
+  heldAdvantage: Int
+  quoted: Int
+  chosenForReward: Int
+  juryVotes: Int
+  special: Int
+  total: Int
+  episode: EpisodeUpdateOneRequiredWithoutPointsInput
+}
+
+input PointsUpdateWithoutEpisodeDataInput {
+  teamReward: Int
+  teamImmunity: Int
+  individualReward: Int
+  individualImmunity: Int
+  correctVote: Int
+  recievedVote: Int
+  out: Int
+  recievedClue: Int
+  foundIdol: Int
+  foundAdvantage: Int
+  heldIdol: Int
+  heldAdvantage: Int
+  quoted: Int
+  chosenForReward: Int
+  juryVotes: Int
+  special: Int
+  total: Int
+  contestant: ContestantUpdateOneRequiredWithoutPointsInput
+}
+
+input PointsUpdateWithWhereUniqueWithoutContestantInput {
+  where: PointsWhereUniqueInput!
+  data: PointsUpdateWithoutContestantDataInput!
+}
+
+input PointsUpdateWithWhereUniqueWithoutEpisodeInput {
+  where: PointsWhereUniqueInput!
+  data: PointsUpdateWithoutEpisodeDataInput!
+}
+
+input PointsUpsertWithWhereUniqueWithoutContestantInput {
+  where: PointsWhereUniqueInput!
+  update: PointsUpdateWithoutContestantDataInput!
+  create: PointsCreateWithoutContestantInput!
+}
+
+input PointsUpsertWithWhereUniqueWithoutEpisodeInput {
+  where: PointsWhereUniqueInput!
+  update: PointsUpdateWithoutEpisodeDataInput!
+  create: PointsCreateWithoutEpisodeInput!
 }
 
 input PointsWhereInput {
@@ -1685,18 +2357,18 @@ input PointsWhereUniqueInput {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  pointses(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points]!
   episodes(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Episode]!
+  pointses(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points]!
   tribes(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tribe]!
   contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
   user(where: UserWhereUniqueInput!): User
-  points(where: PointsWhereUniqueInput!): Points
   episode(where: EpisodeWhereUniqueInput!): Episode
+  points(where: PointsWhereUniqueInput!): Points
   tribe(where: TribeWhereUniqueInput!): Tribe
   contestant(where: ContestantWhereUniqueInput!): Contestant
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  pointsesConnection(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PointsConnection!
   episodesConnection(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EpisodeConnection!
+  pointsesConnection(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PointsConnection!
   tribesConnection(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TribeConnection!
   contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
 
@@ -1709,8 +2381,8 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  points(where: PointsSubscriptionWhereInput): PointsSubscriptionPayload
   episode(where: EpisodeSubscriptionWhereInput): EpisodeSubscriptionPayload
+  points(where: PointsSubscriptionWhereInput): PointsSubscriptionPayload
   tribe(where: TribeSubscriptionWhereInput): TribeSubscriptionPayload
   contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
 }
@@ -1719,6 +2391,7 @@ type Tribe implements Node {
   id: ID!
   name: String!
   color: String!
+  contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant!]
 }
 
 """A connection to a list of items."""
@@ -1734,11 +2407,22 @@ type TribeConnection {
 input TribeCreateInput {
   name: String!
   color: String!
+  contestants: ContestantCreateManyWithoutCurrentTribeInput
 }
 
 input TribeCreateOneInput {
   create: TribeCreateInput
   connect: TribeWhereUniqueInput
+}
+
+input TribeCreateOneWithoutContestantsInput {
+  create: TribeCreateWithoutContestantsInput
+  connect: TribeWhereUniqueInput
+}
+
+input TribeCreateWithoutContestantsInput {
+  name: String!
+  color: String!
 }
 
 """An edge in a connection."""
@@ -1811,11 +2495,13 @@ input TribeSubscriptionWhereInput {
 input TribeUpdateDataInput {
   name: String
   color: String
+  contestants: ContestantUpdateManyWithoutCurrentTribeInput
 }
 
 input TribeUpdateInput {
   name: String
   color: String
+  contestants: ContestantUpdateManyWithoutCurrentTribeInput
 }
 
 input TribeUpdateManyMutationInput {
@@ -1830,9 +2516,26 @@ input TribeUpdateOneRequiredInput {
   upsert: TribeUpsertNestedInput
 }
 
+input TribeUpdateOneRequiredWithoutContestantsInput {
+  create: TribeCreateWithoutContestantsInput
+  connect: TribeWhereUniqueInput
+  update: TribeUpdateWithoutContestantsDataInput
+  upsert: TribeUpsertWithoutContestantsInput
+}
+
+input TribeUpdateWithoutContestantsDataInput {
+  name: String
+  color: String
+}
+
 input TribeUpsertNestedInput {
   update: TribeUpdateDataInput!
   create: TribeCreateInput!
+}
+
+input TribeUpsertWithoutContestantsInput {
+  update: TribeUpdateWithoutContestantsDataInput!
+  create: TribeCreateWithoutContestantsInput!
 }
 
 input TribeWhereInput {
@@ -1964,6 +2667,9 @@ input TribeWhereInput {
 
   """All values not ending with the given string."""
   color_not_ends_with: String
+  contestants_every: ContestantWhereInput
+  contestants_some: ContestantWhereInput
+  contestants_none: ContestantWhereInput
 }
 
 input TribeWhereUniqueInput {

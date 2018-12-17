@@ -2,17 +2,7 @@ import React from 'react';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
 import ScoringTableRow from './ScoringTableRow';
-
-const GET_CONTESTANTS = gql`
-  {
-    contestants{
-      firstName
-      lastName
-      fullName
-      id
-    }
-  }
-`
+import { GET_CONTESTANTS } from './../constants/queries';
 
 function ScoringTable(props) {
 

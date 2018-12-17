@@ -13,12 +13,14 @@ type Contestant {
   photoURL: String!
   originalTribe: Tribe! @relation(name: "ContestantByOriginalTribe")
   currentTribe: Tribe! @relation(name: "ContestantByCurrentTribe")
+  points: [Points!]! @relation(name: "ContestantByPoints")
 }
 
 type Tribe {
   id: ID! @unique
   name: String!
   color: String!
+  contestants: [Contestant!]! @relation(name: "ContestantByCurrentTribe")
 }
 
 type Episode {
@@ -28,6 +30,7 @@ type Episode {
   out: [Contestant!]! @relation(name: "ContestantsOutByEpisode")
   episodeMessage: String
   airDate: String!
+  points: [Points!]! @relation(name: "EpisodeByPoints")
 }
 
 type Points {

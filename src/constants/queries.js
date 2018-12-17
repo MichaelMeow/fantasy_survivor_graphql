@@ -8,6 +8,9 @@ const GET_CONTESTANTS = gql`
       firstName
       lastName
       photoURL
+      currentTribe{
+        name
+      }
     }
   }
 `;
