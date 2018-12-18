@@ -4,7 +4,7 @@ import { Query } from 'react-apollo';
 import ScoringTable from './ScoringTable';
 import styled from 'styled-components';
 import { ADD_EPISODE, ADD_POINTS, UPDATE_TRIBE } from './../constants/mutations';
-import { GET_CONTESTANTS, GET_EPISODES } from './../constants/queries';
+import { GET_CONTESTANTS, GET_EPISODES, GET_VALIDCONTESTANTS } from './../constants/queries';
 import { ApolloConsumer } from 'react-apollo';
 
 const Div = styled.div`
@@ -151,33 +151,61 @@ function EpisodeFormContainer(props) {
                         placeholder='Episode Title'
                         ref={(input)=>{title = input}}/>
                     </Div>
-                    <Div>
-                      Contestant Out:
-                      <select ref={(input) => {out1 = input;}}>
-                        <option value=''>Select a Contestant</option>
-                        {contestants.map(contestant => (
-                          <option key={contestant.id} value={contestant.id}>{contestant.fullName}</option>
-                        ))}
-                      </select>
-                    </Div>
-                    <Div>
-                      Contestant Out 2(optional):
-                      <select ref={(input) => {out2 = input;}}>
-                        <option key='0' value=''>Select a Contestant</option>
-                        {contestants.map(contestant => (
-                          <option key={contestant.id} value={contestant.id}>{contestant.fullName}</option>
-                        ))}
-                      </select>
-                    </Div>
-                    <Div>
-                      Contestant Out 3(optional):
-                      <select ref={(input) => {out3 = input;}}>
-                        <option key='0' value=''>Select a Contestant</option>
-                        {contestants.map(contestant => (
-                          <option key={contestant.id} value={contestant.id}>{contestant.fullName}</option>
-                        ))}
-                      </select>
-                    </Div>
+                    <Query query={GET_VALIDCONTESTANTS}>
+                     {({ loading, error, data }) => {
+                       if (loading) return "Loading...";
+                       if (error) return `Error! ${error.message}`;
+
+                       return (
+                         <Div>
+                           Contestant Out:
+                           <select ref={(input) => {out1 = input;}}>
+                             <option value=''>Select a Contestant</option>
+                             {data.validContestants.map(contestant => (
+                               <option key={contestant.id} value={contestant.id}>{contestant.fullName}</option>
+                             ))}
+                           </select>
+                         </Div>
+                       );
+                     }}
+                    </Query>
+
+                    <Query query={GET_VALIDCONTESTANTS}>
+                     {({ loading, error, data }) => {
+                       if (loading) return "Loading...";
+                       if (error) return `Error! ${error.message}`;
+
+                       return (
+                         <Div>
+                           Contestant Out 2 (Optional):
+                           <select ref={(input) => {out2 = input;}}>
+                             <option value=''>Select a Contestant</option>
+                             {data.validContestants.map(contestant => (
+                               <option key={contestant.id} value={contestant.id}>{contestant.fullName}</option>
+                             ))}
+                           </select>
+                         </Div>
+                       );
+                     }}
+                    </Query>
+                    <Query query={GET_VALIDCONTESTANTS}>
+                     {({ loading, error, data }) => {
+                       if (loading) return "Loading...";
+                       if (error) return `Error! ${error.message}`;
+
+                       return (
+                         <Div>
+                           Contestant Out3 (Optional):
+                           <select ref={(input) => {out3 = input;}}>
+                             <option value=''>Select a Contestant</option>
+                             {data.validContestants.map(contestant => (
+                               <option key={contestant.id} value={contestant.id}>{contestant.fullName}</option>
+                             ))}
+                           </select>
+                         </Div>
+                       );
+                     }}
+                    </Query>
                     <Div>
                       Episode Message:
                       <input

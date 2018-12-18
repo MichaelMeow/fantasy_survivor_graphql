@@ -18,6 +18,24 @@ const GET_CONTESTANTS = gql`
 
 export { GET_CONTESTANTS };
 
+const GET_VALIDCONTESTANTS = gql`
+  {
+    validContestants{
+      id
+      fullName
+      firstName
+      lastName
+      photoURL
+      currentTribe{
+        id
+        name
+      }
+    }
+  }
+`;
+
+export { GET_VALIDCONTESTANTS };
+
 const GET_TRIBES = gql`
   {
     tribes{
