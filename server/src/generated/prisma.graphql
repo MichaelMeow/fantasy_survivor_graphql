@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-harmon/fantasy_survivor/dev
-# timestamp: Mon Dec 17 2018 12:12:21 GMT-0800 (PST)
+# timestamp: Mon Dec 17 2018 16:11:56 GMT-0800 (PST)
 
 type AggregateContestant {
   count: Int!
@@ -35,6 +35,7 @@ type Contestant implements Node {
   originalTribe: Tribe!
   currentTribe: Tribe!
   points(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points!]
+  out: Episode
 }
 
 """A connection to a list of items."""
@@ -55,15 +56,16 @@ input ContestantCreateInput {
   originalTribe: TribeCreateOneInput!
   currentTribe: TribeCreateOneWithoutContestantsInput!
   points: PointsCreateManyWithoutContestantInput
-}
-
-input ContestantCreateManyInput {
-  create: [ContestantCreateInput!]
-  connect: [ContestantWhereUniqueInput!]
+  out: EpisodeCreateOneWithoutOutInput
 }
 
 input ContestantCreateManyWithoutCurrentTribeInput {
   create: [ContestantCreateWithoutCurrentTribeInput!]
+  connect: [ContestantWhereUniqueInput!]
+}
+
+input ContestantCreateManyWithoutOutInput {
+  create: [ContestantCreateWithoutOutInput!]
   connect: [ContestantWhereUniqueInput!]
 }
 
@@ -79,6 +81,17 @@ input ContestantCreateWithoutCurrentTribeInput {
   photoURL: String!
   originalTribe: TribeCreateOneInput!
   points: PointsCreateManyWithoutContestantInput
+  out: EpisodeCreateOneWithoutOutInput
+}
+
+input ContestantCreateWithoutOutInput {
+  fullName: String!
+  firstName: String!
+  lastName: String!
+  photoURL: String!
+  originalTribe: TribeCreateOneInput!
+  currentTribe: TribeCreateOneWithoutContestantsInput!
+  points: PointsCreateManyWithoutContestantInput
 }
 
 input ContestantCreateWithoutPointsInput {
@@ -88,6 +101,7 @@ input ContestantCreateWithoutPointsInput {
   photoURL: String!
   originalTribe: TribeCreateOneInput!
   currentTribe: TribeCreateOneWithoutContestantsInput!
+  out: EpisodeCreateOneWithoutOutInput
 }
 
 """An edge in a connection."""
@@ -374,16 +388,6 @@ input ContestantSubscriptionWhereInput {
   node: ContestantWhereInput
 }
 
-input ContestantUpdateDataInput {
-  fullName: String
-  firstName: String
-  lastName: String
-  photoURL: String
-  originalTribe: TribeUpdateOneRequiredInput
-  currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
-  points: PointsUpdateManyWithoutContestantInput
-}
-
 input ContestantUpdateInput {
   fullName: String
   firstName: String
@@ -392,6 +396,7 @@ input ContestantUpdateInput {
   originalTribe: TribeUpdateOneRequiredInput
   currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
   points: PointsUpdateManyWithoutContestantInput
+  out: EpisodeUpdateOneWithoutOutInput
 }
 
 input ContestantUpdateManyDataInput {
@@ -399,17 +404,6 @@ input ContestantUpdateManyDataInput {
   firstName: String
   lastName: String
   photoURL: String
-}
-
-input ContestantUpdateManyInput {
-  create: [ContestantCreateInput!]
-  connect: [ContestantWhereUniqueInput!]
-  disconnect: [ContestantWhereUniqueInput!]
-  delete: [ContestantWhereUniqueInput!]
-  update: [ContestantUpdateWithWhereUniqueNestedInput!]
-  updateMany: [ContestantUpdateManyWithWhereNestedInput!]
-  deleteMany: [ContestantScalarWhereInput!]
-  upsert: [ContestantUpsertWithWhereUniqueNestedInput!]
 }
 
 input ContestantUpdateManyMutationInput {
@@ -428,6 +422,17 @@ input ContestantUpdateManyWithoutCurrentTribeInput {
   updateMany: [ContestantUpdateManyWithWhereNestedInput!]
   deleteMany: [ContestantScalarWhereInput!]
   upsert: [ContestantUpsertWithWhereUniqueWithoutCurrentTribeInput!]
+}
+
+input ContestantUpdateManyWithoutOutInput {
+  create: [ContestantCreateWithoutOutInput!]
+  connect: [ContestantWhereUniqueInput!]
+  disconnect: [ContestantWhereUniqueInput!]
+  delete: [ContestantWhereUniqueInput!]
+  update: [ContestantUpdateWithWhereUniqueWithoutOutInput!]
+  updateMany: [ContestantUpdateManyWithWhereNestedInput!]
+  deleteMany: [ContestantScalarWhereInput!]
+  upsert: [ContestantUpsertWithWhereUniqueWithoutOutInput!]
 }
 
 input ContestantUpdateManyWithWhereNestedInput {
@@ -449,6 +454,17 @@ input ContestantUpdateWithoutCurrentTribeDataInput {
   photoURL: String
   originalTribe: TribeUpdateOneRequiredInput
   points: PointsUpdateManyWithoutContestantInput
+  out: EpisodeUpdateOneWithoutOutInput
+}
+
+input ContestantUpdateWithoutOutDataInput {
+  fullName: String
+  firstName: String
+  lastName: String
+  photoURL: String
+  originalTribe: TribeUpdateOneRequiredInput
+  currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
+  points: PointsUpdateManyWithoutContestantInput
 }
 
 input ContestantUpdateWithoutPointsDataInput {
@@ -458,11 +474,7 @@ input ContestantUpdateWithoutPointsDataInput {
   photoURL: String
   originalTribe: TribeUpdateOneRequiredInput
   currentTribe: TribeUpdateOneRequiredWithoutContestantsInput
-}
-
-input ContestantUpdateWithWhereUniqueNestedInput {
-  where: ContestantWhereUniqueInput!
-  data: ContestantUpdateDataInput!
+  out: EpisodeUpdateOneWithoutOutInput
 }
 
 input ContestantUpdateWithWhereUniqueWithoutCurrentTribeInput {
@@ -470,21 +482,26 @@ input ContestantUpdateWithWhereUniqueWithoutCurrentTribeInput {
   data: ContestantUpdateWithoutCurrentTribeDataInput!
 }
 
+input ContestantUpdateWithWhereUniqueWithoutOutInput {
+  where: ContestantWhereUniqueInput!
+  data: ContestantUpdateWithoutOutDataInput!
+}
+
 input ContestantUpsertWithoutPointsInput {
   update: ContestantUpdateWithoutPointsDataInput!
   create: ContestantCreateWithoutPointsInput!
-}
-
-input ContestantUpsertWithWhereUniqueNestedInput {
-  where: ContestantWhereUniqueInput!
-  update: ContestantUpdateDataInput!
-  create: ContestantCreateInput!
 }
 
 input ContestantUpsertWithWhereUniqueWithoutCurrentTribeInput {
   where: ContestantWhereUniqueInput!
   update: ContestantUpdateWithoutCurrentTribeDataInput!
   create: ContestantCreateWithoutCurrentTribeInput!
+}
+
+input ContestantUpsertWithWhereUniqueWithoutOutInput {
+  where: ContestantWhereUniqueInput!
+  update: ContestantUpdateWithoutOutDataInput!
+  create: ContestantCreateWithoutOutInput!
 }
 
 input ContestantWhereInput {
@@ -701,6 +718,7 @@ input ContestantWhereInput {
   points_every: PointsWhereInput
   points_some: PointsWhereInput
   points_none: PointsWhereInput
+  out: EpisodeWhereInput
 }
 
 input ContestantWhereUniqueInput {
@@ -732,8 +750,13 @@ input EpisodeCreateInput {
   title: String!
   episodeMessage: String
   airDate: String!
-  out: ContestantCreateManyInput
+  out: ContestantCreateManyWithoutOutInput
   points: PointsCreateManyWithoutEpisodeInput
+}
+
+input EpisodeCreateOneWithoutOutInput {
+  create: EpisodeCreateWithoutOutInput
+  connect: EpisodeWhereUniqueInput
 }
 
 input EpisodeCreateOneWithoutPointsInput {
@@ -741,12 +764,20 @@ input EpisodeCreateOneWithoutPointsInput {
   connect: EpisodeWhereUniqueInput
 }
 
+input EpisodeCreateWithoutOutInput {
+  number: Int!
+  title: String!
+  episodeMessage: String
+  airDate: String!
+  points: PointsCreateManyWithoutEpisodeInput
+}
+
 input EpisodeCreateWithoutPointsInput {
   number: Int!
   title: String!
   episodeMessage: String
   airDate: String!
-  out: ContestantCreateManyInput
+  out: ContestantCreateManyWithoutOutInput
 }
 
 """An edge in a connection."""
@@ -827,7 +858,7 @@ input EpisodeUpdateInput {
   title: String
   episodeMessage: String
   airDate: String
-  out: ContestantUpdateManyInput
+  out: ContestantUpdateManyWithoutOutInput
   points: PointsUpdateManyWithoutEpisodeInput
 }
 
@@ -845,12 +876,34 @@ input EpisodeUpdateOneRequiredWithoutPointsInput {
   upsert: EpisodeUpsertWithoutPointsInput
 }
 
+input EpisodeUpdateOneWithoutOutInput {
+  create: EpisodeCreateWithoutOutInput
+  connect: EpisodeWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
+  update: EpisodeUpdateWithoutOutDataInput
+  upsert: EpisodeUpsertWithoutOutInput
+}
+
+input EpisodeUpdateWithoutOutDataInput {
+  number: Int
+  title: String
+  episodeMessage: String
+  airDate: String
+  points: PointsUpdateManyWithoutEpisodeInput
+}
+
 input EpisodeUpdateWithoutPointsDataInput {
   number: Int
   title: String
   episodeMessage: String
   airDate: String
-  out: ContestantUpdateManyInput
+  out: ContestantUpdateManyWithoutOutInput
+}
+
+input EpisodeUpsertWithoutOutInput {
+  update: EpisodeUpdateWithoutOutDataInput!
+  create: EpisodeCreateWithoutOutInput!
 }
 
 input EpisodeUpsertWithoutPointsInput {
@@ -1069,35 +1122,35 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  createContestant(data: ContestantCreateInput!): Contestant!
   createEpisode(data: EpisodeCreateInput!): Episode!
   createPoints(data: PointsCreateInput!): Points!
   createTribe(data: TribeCreateInput!): Tribe!
-  createContestant(data: ContestantCreateInput!): Contestant!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
   updateEpisode(data: EpisodeUpdateInput!, where: EpisodeWhereUniqueInput!): Episode
   updatePoints(data: PointsUpdateInput!, where: PointsWhereUniqueInput!): Points
   updateTribe(data: TribeUpdateInput!, where: TribeWhereUniqueInput!): Tribe
-  updateContestant(data: ContestantUpdateInput!, where: ContestantWhereUniqueInput!): Contestant
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteContestant(where: ContestantWhereUniqueInput!): Contestant
   deleteEpisode(where: EpisodeWhereUniqueInput!): Episode
   deletePoints(where: PointsWhereUniqueInput!): Points
   deleteTribe(where: TribeWhereUniqueInput!): Tribe
-  deleteContestant(where: ContestantWhereUniqueInput!): Contestant
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
   upsertEpisode(where: EpisodeWhereUniqueInput!, create: EpisodeCreateInput!, update: EpisodeUpdateInput!): Episode!
   upsertPoints(where: PointsWhereUniqueInput!, create: PointsCreateInput!, update: PointsUpdateInput!): Points!
   upsertTribe(where: TribeWhereUniqueInput!, create: TribeCreateInput!, update: TribeUpdateInput!): Tribe!
-  upsertContestant(where: ContestantWhereUniqueInput!, create: ContestantCreateInput!, update: ContestantUpdateInput!): Contestant!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
   updateManyEpisodes(data: EpisodeUpdateManyMutationInput!, where: EpisodeWhereInput): BatchPayload!
   updateManyPointses(data: PointsUpdateManyMutationInput!, where: PointsWhereInput): BatchPayload!
   updateManyTribes(data: TribeUpdateManyMutationInput!, where: TribeWhereInput): BatchPayload!
-  updateManyContestants(data: ContestantUpdateManyMutationInput!, where: ContestantWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyContestants(where: ContestantWhereInput): BatchPayload!
   deleteManyEpisodes(where: EpisodeWhereInput): BatchPayload!
   deleteManyPointses(where: PointsWhereInput): BatchPayload!
   deleteManyTribes(where: TribeWhereInput): BatchPayload!
-  deleteManyContestants(where: ContestantWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -2357,20 +2410,20 @@ input PointsWhereUniqueInput {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
   episodes(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Episode]!
   pointses(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Points]!
   tribes(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Tribe]!
-  contestants(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Contestant]!
   user(where: UserWhereUniqueInput!): User
+  contestant(where: ContestantWhereUniqueInput!): Contestant
   episode(where: EpisodeWhereUniqueInput!): Episode
   points(where: PointsWhereUniqueInput!): Points
   tribe(where: TribeWhereUniqueInput!): Tribe
-  contestant(where: ContestantWhereUniqueInput!): Contestant
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
   episodesConnection(where: EpisodeWhereInput, orderBy: EpisodeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): EpisodeConnection!
   pointsesConnection(where: PointsWhereInput, orderBy: PointsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PointsConnection!
   tribesConnection(where: TribeWhereInput, orderBy: TribeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TribeConnection!
-  contestantsConnection(where: ContestantWhereInput, orderBy: ContestantOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContestantConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -2381,10 +2434,10 @@ type Query {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
   episode(where: EpisodeSubscriptionWhereInput): EpisodeSubscriptionPayload
   points(where: PointsSubscriptionWhereInput): PointsSubscriptionPayload
   tribe(where: TribeSubscriptionWhereInput): TribeSubscriptionPayload
-  contestant(where: ContestantSubscriptionWhereInput): ContestantSubscriptionPayload
 }
 
 type Tribe implements Node {

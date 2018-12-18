@@ -14,6 +14,7 @@ type Contestant {
   originalTribe: Tribe! @relation(name: "ContestantByOriginalTribe")
   currentTribe: Tribe! @relation(name: "ContestantByCurrentTribe")
   points: [Points!]! @relation(name: "ContestantByPoints")
+  out: Episode @relation(name: "ContestantsOutByEpisode")
 }
 
 type Tribe {

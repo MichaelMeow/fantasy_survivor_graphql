@@ -73,7 +73,6 @@ function EpisodeFormContainer(props) {
         contestant: contestant.id
       }
     })
-    console.log(e.target[`tribe${contestant.id}`].value);
   }
 
   return (

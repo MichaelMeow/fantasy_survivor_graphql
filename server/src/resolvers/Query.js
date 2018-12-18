@@ -15,9 +15,14 @@ async function points(parent, args, context, info) {
   return context.db.query.points({}, info)
 }
 
+async function validContestants(parent, args, context, info) {
+  return context.db.query.contestants({where: {out: null}}, info);
+}
+
 module.exports = {
   tribes,
   contestants,
   episodes,
   points,
+  validContestants,
 }
