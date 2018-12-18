@@ -11,61 +11,65 @@ const StyledRow = styled.div`
   grid-template-columns: 200px repeat(16, 40px) 80px 40px;
 `
 
+function ScoringTableRow({contestant, out}) {
 
-function ScoringTableRow({contestant}) {
+  let disabled = false
+  if (out) {
+    disabled = true
+  }
 
   return (
     <StyledRow>
       <div className={`contestant ${contestant.id}`}>
-        {contestant.fullName} ({contestant.currentTribe.name})
+        {contestant.fullName} ({contestant.currentTribe.name}) {out}
       </div>
       <div>
-        <input type="checkbox" id={`teamReward${contestant.id}`} />
+        <input type="checkbox" id={`teamReward${contestant.id}`} disabled={disabled}/>
       </div>
       <div>
-        <input type="checkbox" id={`teamImmunity${contestant.id}`}  />
+        <input type="checkbox" id={`teamImmunity${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`individualReward${contestant.id}`}  />
+        <input type="checkbox" id={`individualReward${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`individualImmunity${contestant.id}`}  />
+        <input type="checkbox" id={`individualImmunity${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`correctVote${contestant.id}`}  />
+        <input type="checkbox" id={`correctVote${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`recievedVote${contestant.id}`}  />
+        <input type="checkbox" id={`recievedVote${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`out${contestant.id}`}  />
+        <input type="checkbox" id={`out${contestant.id}`}  disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`clue${contestant.id}`}  />
+        <input type="checkbox" id={`clue${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`foundIdol${contestant.id}`}  />
+        <input type="checkbox" id={`foundIdol${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`foundAdvantage${contestant.id}`}  />
+        <input type="checkbox" id={`foundAdvantage${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <SmallInput type='number' id={`heldIdol${contestant.id}`} />
+        <SmallInput type='number' id={`heldIdol${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`heldAdvantage${contestant.id}`}  />
+        <input type="checkbox" id={`heldAdvantage${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`quoted${contestant.id}`}  />
+        <input type="checkbox" id={`quoted${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <input type="checkbox" id={`chosenReward${contestant.id}`}  />
+        <input type="checkbox" id={`chosenReward${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <SmallInput type="number" id={`juryVotes${contestant.id}`}/>
+        <SmallInput type="number" id={`juryVotes${contestant.id}`} disabled={disabled} />
       </div>
       <div>
-        <SmallInput type="number" id={`special${contestant.id}`}/>
+        <SmallInput type="number" id={`special${contestant.id}`} disabled={disabled} />
       </div>
       <div className={`assignTribe ${contestant.id}`}>
           <Query query={GET_TRIBES}>
@@ -74,7 +78,7 @@ function ScoringTableRow({contestant}) {
               if (error) return `Error! ${error.message}`;
 
               return (
-                <select id={`tribe${contestant.id}`}>
+                <select id={`tribe${contestant.id}`} disabled={disabled} >
                   <option key={contestant.id} value={contestant.currentTribe.id}>-tribe-</option>
                   {data.tribes.map(tribe => (
                     <option key={tribe.id} value={tribe.id}>

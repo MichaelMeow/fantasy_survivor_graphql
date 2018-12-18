@@ -12,6 +12,9 @@ const GET_CONTESTANTS = gql`
         id
         name
       }
+      out {
+        id
+      }
     }
   }
 `;

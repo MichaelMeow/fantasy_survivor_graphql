@@ -73,11 +73,22 @@ function ScoringTable(props) {
         if (error) return `Error! ${error.message}`;
         return (
           <div>
-          {data.contestants.map(contestant => (
-            <ScoringTableRow
-              contestant={contestant}
-              key={contestant.id}/>
-          ))}
+          {data.contestants.map(contestant => {
+            if (contestant.out){
+              return (
+                <ScoringTableRow
+                contestant={contestant}
+                key={contestant.id} out={"Out"}/>
+              )
+            } else {
+              return (
+                <ScoringTableRow
+                contestant={contestant}
+                key={contestant.id} out={''}/>
+              )
+            }
+          }
+        )}
           </div>
         );
       }}
