@@ -38,6 +38,27 @@ const GET_VALIDCONTESTANTS = gql`
 `;
 
 export { GET_VALIDCONTESTANTS };
+const GET_OUTCONTESTANTS = gql`
+  {
+    outContestants{
+      id
+      fullName
+      firstName
+      lastName
+      photoURL
+      currentTribe{
+        id
+        name
+      }
+      out {
+        id
+        number
+      }
+    }
+  }
+`;
+
+export { GET_OUTCONTESTANTS };
 
 const GET_TRIBES = gql`
   {

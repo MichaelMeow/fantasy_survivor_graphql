@@ -6,6 +6,7 @@ type Query {
   episodes: [Episode!]!
   points: [Points!]!
   validContestants: [Contestant!]!
+  outContestants: [Contestant!]!
 }
 
 type Mutation {

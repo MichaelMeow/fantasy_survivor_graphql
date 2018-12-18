@@ -10,6 +10,9 @@ const StyledRow = styled.div`
   display: grid;
   grid-template-columns: 200px repeat(16, 40px) 80px 40px;
 `
+const Red = styled.span`
+  color: red;
+`
 
 function ScoringTableRow({contestant, out}) {
 
@@ -21,7 +24,7 @@ function ScoringTableRow({contestant, out}) {
   return (
     <StyledRow>
       <div className={`contestant ${contestant.id}`}>
-        {contestant.fullName} ({contestant.currentTribe.name}) {out}
+        {contestant.fullName} ({contestant.currentTribe.name}) <Red>{out}</Red>
       </div>
       <div>
         <input type="checkbox" id={`teamReward${contestant.id}`} disabled={disabled}/>
