@@ -30,6 +30,7 @@ const ADD_POINTS = gql`
   mutation AddPoints(
     $contestant: ID!,
     $episode: ID!,
+    $tribe: ID!,
     $teamReward: Boolean!,
     $teamImmunity: Boolean!,
     $individualReward: Boolean!,
@@ -49,6 +50,7 @@ const ADD_POINTS = gql`
       addPoints(
         contestant: $contestant,
         episode: $episode,
+        tribe: $tribe,
         teamReward: $teamReward,
         teamImmunity: $teamImmunity,
         individualReward: $individualReward,

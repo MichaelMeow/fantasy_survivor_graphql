@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/michael-harmon/fantasy_survivor/dev
-# timestamp: Mon Dec 17 2018 16:11:56 GMT-0800 (PST)
+# timestamp: Tue Dec 18 2018 09:39:49 GMT-0800 (PST)
 
 type AggregateContestant {
   count: Int!
@@ -1184,6 +1184,7 @@ type Points implements Node {
   id: ID!
   contestant: Contestant!
   episode: Episode!
+  tribe: Tribe!
   teamReward: Int!
   teamImmunity: Int!
   individualReward: Int!
@@ -1233,6 +1234,7 @@ input PointsCreateInput {
   total: Int!
   contestant: ContestantCreateOneWithoutPointsInput!
   episode: EpisodeCreateOneWithoutPointsInput!
+  tribe: TribeCreateOneInput!
 }
 
 input PointsCreateManyWithoutContestantInput {
@@ -1264,6 +1266,7 @@ input PointsCreateWithoutContestantInput {
   special: Int!
   total: Int!
   episode: EpisodeCreateOneWithoutPointsInput!
+  tribe: TribeCreateOneInput!
 }
 
 input PointsCreateWithoutEpisodeInput {
@@ -1285,6 +1288,7 @@ input PointsCreateWithoutEpisodeInput {
   special: Int!
   total: Int!
   contestant: ContestantCreateOneWithoutPointsInput!
+  tribe: TribeCreateOneInput!
 }
 
 """An edge in a connection."""
@@ -1844,6 +1848,7 @@ input PointsUpdateInput {
   total: Int
   contestant: ContestantUpdateOneRequiredWithoutPointsInput
   episode: EpisodeUpdateOneRequiredWithoutPointsInput
+  tribe: TribeUpdateOneRequiredInput
 }
 
 input PointsUpdateManyDataInput {
@@ -1932,6 +1937,7 @@ input PointsUpdateWithoutContestantDataInput {
   special: Int
   total: Int
   episode: EpisodeUpdateOneRequiredWithoutPointsInput
+  tribe: TribeUpdateOneRequiredInput
 }
 
 input PointsUpdateWithoutEpisodeDataInput {
@@ -1953,6 +1959,7 @@ input PointsUpdateWithoutEpisodeDataInput {
   special: Int
   total: Int
   contestant: ContestantUpdateOneRequiredWithoutPointsInput
+  tribe: TribeUpdateOneRequiredInput
 }
 
 input PointsUpdateWithWhereUniqueWithoutContestantInput {
@@ -2402,6 +2409,7 @@ input PointsWhereInput {
   total_gte: Int
   contestant: ContestantWhereInput
   episode: EpisodeWhereInput
+  tribe: TribeWhereInput
 }
 
 input PointsWhereUniqueInput {

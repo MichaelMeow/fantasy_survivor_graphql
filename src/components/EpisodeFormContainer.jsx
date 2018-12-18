@@ -45,6 +45,7 @@ function EpisodeFormContainer(props) {
       variables: {
         contestant: contestant.id,
         episode: newEpisodeID,
+        tribe: e.target[`tribe${contestant.id}`].value,
         teamReward: teamReward,
         teamImmunity: teamImmunity,
         individualReward: individualReward,
@@ -74,6 +75,8 @@ function EpisodeFormContainer(props) {
       }
     })
   }
+
+
 
   return (
     <Div>

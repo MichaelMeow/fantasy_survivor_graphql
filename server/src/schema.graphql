@@ -30,6 +30,7 @@ type Mutation {
   addPoints(
       contestant: ID!,
       episode: ID!,
+      tribe: ID!,
       teamReward: Boolean!,
       teamImmunity: Boolean!,
       individualReward: Boolean!,

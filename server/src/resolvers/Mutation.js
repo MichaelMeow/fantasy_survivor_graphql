@@ -73,6 +73,7 @@ async function addPoints(parent, args, context, info) {
     data: {
       contestant: {connect: {id: args.contestant}},
       episode: {connect: {id: args.episode}},
+      tribe: {connect: {id: args.tribe}},
       teamReward: teamReward,
       teamImmunity: teamImmunity,
       individualReward: individualReward,

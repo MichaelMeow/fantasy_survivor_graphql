@@ -38,6 +38,7 @@ type Points {
   id: ID! @unique
   contestant: Contestant! @relation(name: "ContestantByPoints")
   episode: Episode! @relation(name: "EpisodeByPoints")
+  tribe: Tribe! @relation(name: "TribeByPoints")
   teamReward: Int!
   teamImmunity: Int!
   individualReward: Int!
