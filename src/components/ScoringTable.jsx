@@ -82,7 +82,8 @@ function ScoringTable({ currentEpisode }) {
             return (
               <ScoringTableRow
               contestant={contestant}
-              key={contestant.id} out={''}/>
+              key={contestant.id} out={''}
+              currentEpisode={currentEpisode}/>
             )
           }
         )}
@@ -103,7 +104,8 @@ function ScoringTable({ currentEpisode }) {
             return (
               <ScoringTableRow
               contestant={contestant}
-              key={contestant.id} out={"Out"}/>
+              key={contestant.id} out={"Out"}
+              currentEpisode={currentEpisode}/>
             )
           }
         )}

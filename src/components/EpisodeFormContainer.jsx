@@ -22,7 +22,7 @@ function EpisodeFormContainer(props) {
   let airDate;
   let validFormContestants = [];
   let contestants = [];
-  let currentEpisode = {number: 99};
+  let currentEpisode = {number: 99, id: '0'};
   const GET_FORMSTATE = gql`
     {
     number @client

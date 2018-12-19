@@ -4,7 +4,8 @@ type Query {
   tribes: [Tribe!]!
   contestants: [Contestant!]!
   episodes(orderBy: EpisodeOrderByInput): [Episode!]!
-  points: [Points!]!
+  pointses(contestant: ID, episode: ID): [Points!]!
+  points(id: ID!): Points!
   validContestants(filter: Int): [Contestant!]!
   outContestants(filter: Int): [Contestant!]!
 }

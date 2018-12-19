@@ -7,8 +7,17 @@ async function contestants(parent, args, context, info) {
 async function episodes(parent, args, context, info) {
   return context.db.query.episodes({orderBy: args.orderBy}, info);
 }
+async function pointses(parent, args, context, info) {
+  return context.db.query.pointses({where: {
+    AND:[{
+      contestant: {id: args.contestant}
+    },{
+      episode: {id: args.episode}
+    }]}}, info)
+}
+
 async function points(parent, args, context, info) {
-  return context.db.query.points({}, info)
+  return context.db.query.points({where: {id: args}}, info)
 }
 
 async function validContestants(parent, args, context, info) {
@@ -31,6 +40,7 @@ module.exports = {
   contestants,
   episodes,
   points,
+  pointses,
   validContestants,
   outContestants,
 }

@@ -91,6 +91,14 @@ const GET_EPISODES = gql`
   }
 `
 export { GET_EPISODES };
+const GET_POINTSES = gql`
+  query Pointses($contestant: ID, $episode: ID){
+    pointses(contestant: $contestant, episode: $episode){
+      id
+    }
+  }
+`
+export { GET_POINTSES };
 
 const GET_FORMSTATE = gql`
 {
