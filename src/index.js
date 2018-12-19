@@ -7,6 +7,7 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-client'
 import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import { GET_EPISODES } from './constants/queries';
 
 
 const httpLink = createHttpLink({
@@ -15,8 +16,18 @@ const httpLink = createHttpLink({
 
 const client = new ApolloClient({
   link: httpLink,
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
 })
+
+client.writeData({ data: {
+  number: '',
+  title: '',
+  out: [],
+  episodeMessage: '',
+  airDate: '',
+  validFormContestants: [],
+  outFormContestants: [],
+ } })
 
 const render = (Component) => {
   ReactDOM.render(
@@ -35,3 +46,5 @@ render(App);
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.register();
+
+export default client;

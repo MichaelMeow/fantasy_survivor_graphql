@@ -3,10 +3,10 @@
 type Query {
   tribes: [Tribe!]!
   contestants: [Contestant!]!
-  episodes: [Episode!]!
+  episodes(orderBy: EpisodeOrderByInput): [Episode!]!
   points: [Points!]!
-  validContestants: [Contestant!]!
-  outContestants: [Contestant!]!
+  validContestants(filter: Int): [Contestant!]!
+  outContestants(filter: Int): [Contestant!]!
 }
 
 type Mutation {
@@ -51,4 +51,8 @@ type Mutation {
   addTribe(name: String!, color: String!): Tribe
   updateContestant(tribe: ID!, contestant: ID!): Contestant
 
+}
+
+enum EpisodeOrderByInput{
+  number_ASC
 }

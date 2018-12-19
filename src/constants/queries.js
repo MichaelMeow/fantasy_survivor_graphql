@@ -22,8 +22,10 @@ const GET_CONTESTANTS = gql`
 export { GET_CONTESTANTS };
 
 const GET_VALIDCONTESTANTS = gql`
-  {
-    validContestants{
+  query ValidContestants(
+    $filter: Int
+  ){
+    validContestants(filter:$filter){
       id
       fullName
       firstName
@@ -38,9 +40,12 @@ const GET_VALIDCONTESTANTS = gql`
 `;
 
 export { GET_VALIDCONTESTANTS };
+
 const GET_OUTCONTESTANTS = gql`
-  {
-    outContestants{
+  query OutContestants(
+    $filter: Int
+  ){
+    outContestants(filter:$filter){
       id
       fullName
       firstName
@@ -72,13 +77,30 @@ const GET_TRIBES = gql`
 export { GET_TRIBES };
 const GET_EPISODES = gql`
   {
-    episodes{
+    episodes(orderBy: number_ASC){
       id
       number
       title
       episodeMessage
       airDate
+      out{
+        id
+        fullName
+      }
     }
   }
 `
 export { GET_EPISODES };
+
+const GET_FORMSTATE = gql`
+{
+  number @client
+  title @client
+  out1 @client
+  out2 @client
+  out3 @client
+  episodeMessage @client
+  airDate @client
+}
+`;
+export { GET_FORMSTATE };
