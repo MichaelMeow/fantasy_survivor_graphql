@@ -22,7 +22,7 @@ async function validContestants(parent, args, context, info) {
   }}, info);
 }
 async function outContestants(parent, args, context, info) {
-  const filter = args.filter + 1
+  const filter = args.filter
   return context.db.query.contestants({where: {out: {number_lt: filter}}}, info);
 }
 

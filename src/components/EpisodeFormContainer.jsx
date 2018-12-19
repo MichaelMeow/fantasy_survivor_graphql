@@ -22,6 +22,7 @@ function EpisodeFormContainer(props) {
   let airDate;
   let validFormContestants = [];
   let contestants = [];
+  let currentEpisode = {number: 99};
   const GET_FORMSTATE = gql`
     {
     number @client
@@ -38,7 +39,6 @@ function EpisodeFormContainer(props) {
 
   async function loadFormInputs(input, client, episodes){
     input.persist();
-    let currentEpisode;
     let episodeToLoad;
     if (!input.target.value){
       episodeToLoad = 99;
@@ -58,7 +58,6 @@ function EpisodeFormContainer(props) {
       outFormContestants: outContestantsData.outContestants,
       title: currentEpisode.title,
       episodeMessage: currentEpisode.episodeMessage,
-      out: currentEpisode.out.id,
       airDate: currentEpisode.airDate,
      } })
      out1.value = currentEpisode.out[0].id;
@@ -178,7 +177,7 @@ function EpisodeFormContainer(props) {
           placeholder='Air Date'
           ref={(input)=> {airDate = input}} value={formData.airDate}/>
       </Div>
-        <ScoringTable />
+        <ScoringTable currentEpisode={currentEpisode}/>
         <Div>
           <button type='submit'>Submit</button>
         </Div>

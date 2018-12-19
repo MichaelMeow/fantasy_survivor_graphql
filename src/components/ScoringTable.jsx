@@ -4,7 +4,7 @@ import { Query } from 'react-apollo';
 import ScoringTableRow from './ScoringTableRow';
 import { GET_VALIDCONTESTANTS, GET_OUTCONTESTANTS } from './../constants/queries';
 
-function ScoringTable(props) {
+function ScoringTable({ currentEpisode }) {
 
 
   return (
@@ -67,7 +67,7 @@ function ScoringTable(props) {
           TOTAL
         </div>
       </div>
-      <Query query={GET_VALIDCONTESTANTS}>
+      <Query query={GET_VALIDCONTESTANTS} variables={{filter: currentEpisode.number}}>
       {({ loading, error, data }) => {
         if (loading) return "Loading...";
         if (error) return `Error! ${error.message}`;
@@ -90,7 +90,7 @@ function ScoringTable(props) {
         );
       }}
       </Query>
-      <Query query={GET_OUTCONTESTANTS}>
+      <Query query={GET_OUTCONTESTANTS} variables={{filter: currentEpisode.number}}>
       {({ loading, error, data }) => {
         if (loading) return "Loading...";
         if (error) return `Error! ${error.message}`;
