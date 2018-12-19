@@ -95,6 +95,31 @@ const GET_POINTSES = gql`
   query Pointses($contestant: ID, $episode: ID){
     pointses(contestant: $contestant, episode: $episode){
       id
+      contestant{
+        id
+        fullName
+      }
+      tribe{
+        id
+        name
+      }
+      teamReward
+      teamImmunity
+      individualReward
+      individualImmunity
+      correctVote
+      recievedVote
+      out
+      recievedClue
+      foundIdol
+      foundAdvantage
+      heldIdol
+      heldAdvantage
+      quoted
+      chosenForReward
+      juryVotes
+      special
+      total
     }
   }
 `

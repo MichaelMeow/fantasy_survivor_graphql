@@ -20,6 +20,7 @@ function ScoringTableRow({contestant, out, currentEpisode}) {
   if (out) {
     disabled = true
   }
+  let points;
   console.log(currentEpisode.id)
   console.log(contestant.id)
   return (
@@ -27,11 +28,12 @@ function ScoringTableRow({contestant, out, currentEpisode}) {
       {({ loading, error, data }) => {
         if (loading) return "Loading...";
         if (error) return `Error! ${error.message}`;
-
+        let points = data.pointses;
+        console.log(points);
         return (
           <StyledRow>
             <div className={`contestant ${contestant.id}`}>
-              {contestant.fullName} ({contestant.currentTribe.name}) <Red>{out}</Red>
+              {contestant.fullName} ({points.tribe ? points.tribe.name : contestant.currentTribe.name}) <Red>{out}</Red>
             </div>
             <div>
               <input type="checkbox" id={`teamReward${contestant.id}`} disabled={disabled}/>
